@@ -1,0 +1,23 @@
+[
+    {
+        RepackTitle: String,
+        Provider: String,
+        DownloadLinks: [
+            [LinkName, LinkURL, "Torrent" | "Direct" | "Unsure"],
+            [LinkName, LinkURL, "Torrent" | "Direct" | "Unsure"],
+            ...
+        ],
+        Score: [0-1]
+    },
+    { 
+        RepackTitle: String,
+        Provider: String,
+        DownloadLinks: [
+            [LinkName, LinkURL, "Torrent" | "Direct" | "Unsure"],
+            [LinkName, LinkURL, "Torrent" | "Direct" | "Unsure"],
+            ...
+        ],
+        Score: [0-1]
+    },
+    ...
+]
