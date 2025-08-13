@@ -2,6 +2,7 @@
 CGSearch Installer.exe
 runtime
 .editorconfig
+__pycache__
 
 ####### Below .gitignore is taken from https://github.com/AvaloniaUI/Avalonia.Samples/ #########
 

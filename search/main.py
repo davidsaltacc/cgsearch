@@ -5,11 +5,14 @@ from engines.elamigos import get_links_elamigos
 from engines.byxatab import get_links_byxatab
 from engines.ankergames import get_links_ankergames
 from engines.steamunderground import get_links_steamunderground
+from engines.gamebounty import get_links_gamebounty
+from engines.rexagames import get_links_rexagames
 
 if __name__ == "__main__":
     pprint(("hollow kn"))
     input()
 
+# TODO a homepage link also attached in results - with the repackers page on this game
 # TODO add support for parsing filecrypt.cc and similar sites directly and expanding them into more links
 # TODO https://m4ckd0ge-repacks.site/all-repacks.html - doesn't have many repacks, but many filehosts i guess - and may grow in the future? search in the <a>'s href's, i guess - as there is no exact search feature 
 # TODO https://appnetica.com/games maybe? (includes a version thing, include that in displayed title!)
@@ -19,8 +22,6 @@ if __name__ == "__main__":
 # TODO https://www.myabandonware.com/ maybe? (filter out the ones that don't provide a download link but show a purchase button instead)
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://rlsbb.ru/ maybe?
-# TODO https://rexagames.com/search/?&quick=1&search_in=titles&start_after=any&updated_after=any&q=TERM
-# TODO https://gamebounty.world/ NEEDS MANUAL SEARCHING
 # TODO https://scnlog.me/games/?s=TERM is eh, but still maybe maybe maybe
 # TODO https://oldgamesdownload.com/?s=TERM maybe? maybe
 # okay let me tell you a story
