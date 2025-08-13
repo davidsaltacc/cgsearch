@@ -4,6 +4,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CGSearchUI.MainWindow"
-        Title="CGSearchUI">
-    Welcome to Avalonia!
+        Title="CGSearch UI">
+
+	<DockPanel>
+		<DockPanel DockPanel.Dock="Top" Margin="5">
+		    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+				<Button Content="Btn1" />
+				<Button Content="Btn2" />
+				<Button Content="Btn3" />
+			</StackPanel>
+			<TextBox DockPanel.Dock="Left" Watermark="Search..." VerticalAlignment="Center" Margin="0,0,5,0"/>
+		</DockPanel>
+
+		<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+			<DataGrid 
+				x:Name="ResultsDataGrid"
+				IsReadOnly="True" 
+				CanUserReorderColumns="True" 
+				CanUserResizeColumns="True" 
+				CanUserSortColumns="True"
+				GridLinesVisibility="All"
+				ItemsSource="{Binding Results}">
+				
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Game Title" Binding="{Binding RepackTitle}"/>
+					<DataGridTextColumn Header="Provider" Binding="{Binding Provider}"/>
+					<DataGridTextColumn Header="Link Name" Binding="{Binding LinkName}"/>
+					<DataGridTextColumn Header="Link URL" Binding="{Binding LinkUrl}" Width="200"/>
+					<DataGridTextColumn Header="Type" Binding="{Binding LinkType}"/>
+					<DataGridTextColumn Header="Result Confidence" Binding="{Binding Score}"/>
+				</DataGrid.Columns>
+				
+			</DataGrid>
+		</ScrollViewer>
+	</DockPanel>
+	
 </Window>

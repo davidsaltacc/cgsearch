@@ -10,6 +10,7 @@ Name ${APP_NAME}
 InstallDir "C:\Program Files\${APP_NAME}"
 OutFile "CGSearch Installer.exe"
 BrandingText " "
+SetCompressor /SOLID lzma
 
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\nsis3-metro.bmp"

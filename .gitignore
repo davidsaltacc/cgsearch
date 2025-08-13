@@ -1,7 +1,7 @@
 
 CGSearch Installer.exe
 runtime
-
+.editorconfig
 
 ####### Below .gitignore is taken from https://github.com/AvaloniaUI/Avalonia.Samples/ #########
 

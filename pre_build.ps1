@@ -16,4 +16,4 @@ Remove-Item -Path "get-pip.py"
 
 # install dependencies
 Add-Content -Path "runtime/python313._pth" -Value "import site"
-Invoke-Expression "runtime/Scripts/pip.exe install -r src/requirements.txt --target runtime/Lib/site-packages"
+Invoke-Expression "runtime/Scripts/pip.exe install -r search/requirements.txt --target runtime/Lib/site-packages"

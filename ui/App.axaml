@@ -1,10 +1,27 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="CGSearchUI.App"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             RequestedThemeVariant="Dark">
 
-    <Application.Styles>
+	<Application.Styles>
+		<FluentTheme />
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+	</Application.Styles>
+
+	<Application.Styles>
         <FluentTheme />
+
+		<Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
+			<Setter Property="IsVisible" Value="False" />
+		</Style>
+
+		<Style Selector="DataGridRow:nth-child(odd)">
+			<Setter Property="Background" Value="#202020" />
+		</Style>
+
+		<Style Selector="DataGridRow:selected">
+			<Setter Property="Background" Value="#2f2f2f" />
+		</Style>
+		
     </Application.Styles>
 </Application>
