@@ -3,7 +3,7 @@
 Remove-Item "runtime" -Recurse -Force
 
 # download python embeddable runtime
-Invoke-WebRequest "https://www.python.org/ftp/python/3.13.6/python-3.13.6-embed-win32.zip" -OutFile "python_embeddable_runtime.zip"
+Invoke-WebRequest "https://www.python.org/ftp/python/3.13.6/python-3.13.6-embed-amd64.zip" -OutFile "python_embeddable_runtime.zip"
 Expand-Archive -Path "python_embeddable_runtime.zip" -DestinationPath "runtime" -Force
 
 # install pip
