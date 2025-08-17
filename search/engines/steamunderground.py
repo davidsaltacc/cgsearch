@@ -16,8 +16,6 @@ def get_links_steamunderground(name):
     
     name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
 
-    results = [] 
-
     for pair_ in name_link_filtered:
         
         pair = pair_[0]
@@ -32,11 +30,15 @@ def get_links_steamunderground(name):
             for a in soup.select(".download-mirrors-container .DownloadButtonContainer a.enjoy-css")
         ]
 
-        results.append({
+        yield {
             "RepackTitle": pair[0],
-            "Provider": "SteamUnderground",
             "DownloadLinks": all_link_pairs,
             "Score": score
-        })
-        
-    return results
+        }
+
+generator = get_links_steamunderground
+engine_meta = {
+    "id": "steamunderground",
+    "name": "SteamUnderground",
+    "description": "https://steamunderground.net/ is a game piracy site trusted by fmhy offering direct downloads."
+}

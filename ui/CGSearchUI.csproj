@@ -5,8 +5,7 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-	<SelfContained>true</SelfContained>
-	<PublishSingleFile>true</PublishSingleFile>
+	<ApplicationIcon>../icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,13 +19,34 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="LoadingIndicators.Avalonia" Version="11.0.11.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="nulastudio.NetBeauty" Version="2.1.5" />
   </ItemGroup>
 
-	<Target Name="PreBuild" BeforeTargets="Publish">
-		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File pre_build.ps1" WorkingDirectory="../"/>
+	<Target Name="MakeInstaller" AfterTargets="NetBeautyOnPublish_Fx">
+		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File post_build.ps1 publish $(PublishDir)" WorkingDirectory="../" />
 	</Target>
-	<Target Name="PostBuild" AfterTargets="Publish">
-		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File post_build.ps1" WorkingDirectory="../"/>
+
+	<Target Name="PostBuild" AfterTargets="Build">
+		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File post_build.ps1 build $(TargetDir)" WorkingDirectory="../" />
 	</Target>
+
+	<Target Name="CleanStuff" BeforeTargets="Compile">
+		<Exec Command="rmdir /s /q $(PublishDir) &amp; rmdir /s /q $(TargetDir)bin\runtime\ &amp; rmdir /s /q $(TargetDir)search\" />
+	</Target>
+	
+	<PropertyGroup>
+		<BeautySharedRuntimeMode>False</BeautySharedRuntimeMode>
+		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) == 'True'">../bin/dlls</BeautyLibsDir>
+		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) != 'True'">./bin/dlls</BeautyLibsDir>
+		<DisableBeauty>False</DisableBeauty>
+		<BeautyOnPublishOnly>True</BeautyOnPublishOnly>
+		<BeautyNoRuntimeInfo>False</BeautyNoRuntimeInfo>
+		<BeautyNBLoaderVerPolicy>auto</BeautyNBLoaderVerPolicy>
+		<BeautyEnableDebugging>False</BeautyEnableDebugging>
+		<BeautyUsePatch>True</BeautyUsePatch>
+		<BeautyLogLevel>Info</BeautyLogLevel>
+	</PropertyGroup>
 	
 </Project>

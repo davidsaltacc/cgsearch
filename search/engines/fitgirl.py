@@ -21,8 +21,6 @@ def get_links_fitgirl(name):
     
     name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
     
-    results = [] 
-
     for pair_ in name_link_filtered:
 
         pair = pair_[0]
@@ -64,11 +62,15 @@ def get_links_fitgirl(name):
                     all_link_pairs.append([a.get_text(strip = True), absolutify_url(href, newUrl), ltype])
 
         if all_link_pairs:
-            results.append({
+            yield {
                 "RepackTitle": pair[0],
-                "Provider": "FitGirl",
                 "DownloadLinks": all_link_pairs,
                 "Score": score
-            })
-                
-    return results
+            }
+
+generator = get_links_fitgirl
+engine_meta = {
+    "id": "fitgirl",
+    "name": "FitGirl",
+    "description": "https://fitgirl-repacks.site/ is one of the most popular game piracy sites, trusted by many. Contains a lot of games, fast direct file hosts aswell as torrent options."
+}

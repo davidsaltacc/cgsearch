@@ -1,17 +1,90 @@
-from pprint import pprint
-from engines.steamrip import get_links_steamrip
-from engines.fitgirl import get_links_fitgirl
-from engines.elamigos import get_links_elamigos
-from engines.byxatab import get_links_byxatab
-from engines.ankergames import get_links_ankergames
-from engines.steamunderground import get_links_steamunderground
-from engines.gamebounty import get_links_gamebounty
-from engines.rexagames import get_links_rexagames
+import json
+from threading import Thread, Event
+from helpers import read_message, send_message, safe_generator
 
-if __name__ == "__main__":
-    pprint(("hollow kn"))
-    input()
+import engines.steamrip 
+import engines.fitgirl 
+import engines.elamigos 
+import engines.byxatab 
+import engines.ankergames 
+import engines.steamunderground 
+import engines.gamebounty 
+import engines.rexagames 
 
+if __name__ != "__main__":
+    exit(0)
+
+all_engines = [
+    engines.steamrip,
+    engines.fitgirl, 
+    engines.elamigos, 
+    engines.byxatab, 
+    engines.ankergames, 
+    engines.steamunderground, 
+    engines.gamebounty, 
+    engines.rexagames
+]
+
+excluded_engines = []
+
+search_thread = None
+cancel = None
+
+while True:
+    msg = read_message()
+    if msg[0] is None:
+        break
+    
+    msg_type = msg[0]
+    msg_data = msg[1]
+
+    if msg_type == b"srch": # start search
+
+        def start_search(cancel_event):
+            query = msg_data.decode()
+            send_message(b"rset", b"")
+
+            for engine in all_engines:
+                if engine.engine_meta["id"] in excluded_engines:
+                    continue
+                
+                for result in safe_generator(engine.generator(query), lambda e: sys.stderr.write("search engine " + engine.engine_meta["id"] + " failed: \n" + repr(e) + "\n")):
+
+                    if cancel_event.is_set():
+                        send_message(b"done", b"")
+                        return
+
+                    send_message(b"link", json.dumps({ 
+                        "engine_id": engine.engine_meta["id"],
+                        "result": result
+                    }).encode())
+            
+            send_message(b"done", b"")
+        
+        cancel = Event()
+        search_thread = Thread(target = start_search, args = (cancel,))
+        search_thread.start()
+    
+    if msg_type == b"cncl": # cancel
+        cancel.set()
+
+    if msg_type == b"egns": # list engines
+        data = {}
+        for eng in all_engines:
+            data[eng.engine_meta["id"]] = eng.engine_meta
+        send_message(b"egns", json.dumps(data).encode())
+    
+    if msg_type == b"xegn": # exclude/include engine from search
+        data = json.loads(msg_data)
+        action = data["action"]
+        engine_id = data["id"]
+        if action == "exclude" and not engine_id in excluded_engines:
+            excluded_engines.append(engine_id)
+        if action == "include" and engine_id in excluded_engines:
+            excluded_engines.remove(engine_id)
+
+# TODO upload date in data?
+# TODO also helper functions for finding data on things such as - descriptions for filehosters (get link url and link name, filter out common filehosts), descriptions for repack providers - either directly force in results, or add only in helper - probably helper though
 # TODO a homepage link also attached in results - with the repackers page on this game
 # TODO add support for parsing filecrypt.cc and similar sites directly and expanding them into more links
 # TODO https://m4ckd0ge-repacks.site/all-repacks.html - doesn't have many repacks, but many filehosts i guess - and may grow in the future? search in the <a>'s href's, i guess - as there is no exact search feature 
@@ -24,13 +97,3 @@ if __name__ == "__main__":
 # TODO https://rlsbb.ru/ maybe?
 # TODO https://scnlog.me/games/?s=TERM is eh, but still maybe maybe maybe
 # TODO https://oldgamesdownload.com/?s=TERM maybe? maybe
-# okay let me tell you a story
-# i reverse engineered what their webpacked code does exactly to load all the games
-# very early, i found a huge chunk of json data containing all the games, but they didn't have any link, only an id
-# so i reverse engineered everything, trying to figure out how they get an url from the id
-# after all that, well, lets just say i now know quite a bit more about reverse engineering webpack
-# do you want to know what the solution was in the end? 
-# yeah, none of that which i tried to find.
-# in the json blob, each game also contains a "slug" - for example, "hollow-knight" for Hollow Knight (the game).
-# yeah all you have to do is go to /(slug). god im a fucking idiot
-

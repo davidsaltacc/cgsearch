@@ -27,8 +27,6 @@ def get_links_elamigos(name):
     # most sites have a search engine built in, we only use the low .6 threshold to filter out random bullshit that gets included in the results for some reason
     # elamigos does not have a search engine (unless you count Ctrl+F), so we use a higher threshold to filter out all things unrelated
 
-    results = [] 
-
     for pair_ in all_results_filtered:
         
         pair = pair_[0]
@@ -53,11 +51,15 @@ def get_links_elamigos(name):
                 el = el.find_next_sibling()
             all_link_pairs.extend(pairs)
     
-        results.append({
+        yield {
             "RepackTitle": pair[0],
-            "Provider": "ElAmigos",
             "DownloadLinks": all_link_pairs,
             "Score": score
-        })
-        
-    return results
+        }
+
+generator = get_links_elamigos
+engine_meta = {
+    "id": "elamigos",
+    "name": "ElAmigos",
+    "description": "https://elamigos.site/ is a site with a number of repacks. The repacks are only hosted on slow download providers, so your downloads will take a very long time if you don't pay for the hoster's premium option."
+}

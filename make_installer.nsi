@@ -1,14 +1,24 @@
+Function .onInit
+    Quit ;REMOVED_BY_POWERSHELL
+    ; this gets removed by powershell, the reason this exists so no one accidentally runs this using makensis(w) - leaving the powershell-inserted variables at what they are
+FunctionEnd
+
 !include "MUI.nsh"
 
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\nsis3-install-alt.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\nsis3-uninstall.ico"
 
-!define APP_NAME "CGSearch"
-!define MAIN_EXE "CGSearchUI.exe"
+!define name "POWERSHELL_INSERTS_THIS-name"
+!define exename "POWERSHELL_INSERTS_THIS-exename"
+!define version "POWERSHELL_INSERTS_THIS-version"
+!define buildpath "POWERSHELL_INSERTS_THIS-buildpath"
+
+!define APP_NAME ${name}
+!define MAIN_EXE "${exename}.exe"
 
 Name ${APP_NAME}
 InstallDir "C:\Program Files\${APP_NAME}"
-OutFile "CGSearch Installer.exe"
+OutFile "${APP_NAME} Installer.exe"
 BrandingText " "
 SetCompressor /SOLID lzma
 
@@ -32,13 +42,13 @@ SetCompressor /SOLID lzma
 
 !insertmacro MUI_LANGUAGE "English"
 
-Section "Core Components (Required)"
+Section "CGSearch"
 SectionIn RO
 
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayName" "${APP_NAME}"
-WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayVersion" "0.1.0.0"
+WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayVersion" "${version}"
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "Publisher" "justacoder"
-;UNCOMMENT AFTER WE HAVE AN ICON WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayIcon" "$INSTDIR\${APP_NAME}.ico"
+WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayIcon" "$INSTDIR\icon.ico"
 WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoModify" 1
 WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoRepair" 1
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "UninstallString" "$INSTDIR\unins.exe"
@@ -53,11 +63,15 @@ File /r "search\*"
 
 SetOutPath "$INSTDIR"
 File "LICENSE"
-;TODO icon; File /oname=${APP_NAME}.ico PATHTOICONHERE 
 WriteUninstaller "unins.exe"
 
-File "ui\bin\Release\net8.0\win-x64\publish\${MAIN_EXE}"
-File "ui\bin\Release\net8.0\win-x64\publish\*.dll"
+File /r "${buildpath}\*"
+; all files such as icons get copied over to buildpath with powershell, so they get included here - the ones that it copies over in subfolders, such as "bin/runtime" - don't get copied over, we need to do that manually as above here
+
+SetOutPath "$INSTDIR\bin\dlls"
+File /r "${buildpath}\bin\dlls\*"
+
+SetOutPath "$INSTDIR"
 
 SectionEnd
 

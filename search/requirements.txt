@@ -1,4 +1,4 @@
-beautifulsoup4
-requests
-rapidfuzz
-urllib3
+beautifulsoup4 # parsing html
+requests # making http requests
+rapidfuzz # filtering out stuff from results
+urllib3 # utilities like quote_plus

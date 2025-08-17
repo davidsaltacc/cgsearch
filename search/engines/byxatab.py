@@ -16,8 +16,6 @@ def get_links_byxatab(name):
     
     name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
 
-    results = [] 
-
     for pair_ in name_link_filtered:
         
         pair = pair_[0]
@@ -31,11 +29,15 @@ def get_links_byxatab(name):
         # originally says "СКАЧАТЬ ТОРРЕНТ". parsing it is a pain though (it strips the spaces, and if you tell it not to it includes unnecessary characters at the end, including a \xa0), and it doesn't change for any game afaik, so we just hardcode the translation
         torrentLink = [ "DOWNLOAD TORRENT", soup.select_one("#download a.download-torrent")["href"], "Torrent" ]
 
-        results.append({
+        yield {
             "RepackTitle": pair[0],
-            "Provider": "ByXatab",
             "DownloadLinks": [ torrentLink ],
             "Score": score
-        })
-        
-    return results
+        }
+
+generator = get_links_byxatab
+engine_meta = {
+    "id": "byxatab",
+    "name": "ByXatab",
+    "description": "https://byxatab.com/ is a game piracy site trusted by fmhy and others, containing several repacks. Does not feature direct downloads, only torrents."
+}

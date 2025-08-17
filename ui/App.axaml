@@ -3,6 +3,14 @@
              x:Class="CGSearchUI.App"
              RequestedThemeVariant="Dark">
 
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="avares://LoadingIndicators.Avalonia/LoadingIndicators.axaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+
 	<Application.Styles>
 		<FluentTheme />
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
@@ -15,13 +23,83 @@
 			<Setter Property="IsVisible" Value="False" />
 		</Style>
 
-		<Style Selector="DataGridRow:nth-child(odd)">
-			<Setter Property="Background" Value="#202020" />
+		<Style Selector="DataGridCell">
+			<Setter Property="FontSize" Value="14" />
+			<Setter Property="MinHeight" Value="0" />
 		</Style>
 
-		<Style Selector="DataGridRow:selected">
-			<Setter Property="Background" Value="#2f2f2f" />
+		<Style Selector="DataGridCell TextBlock">
+			<Setter Property="Margin" Value="5,2,5,2" />
 		</Style>
-		
-    </Application.Styles>
+
+		<Style Selector="DataGridColumnHeader">
+			<Setter Property="Background" Value="#7f000000" />
+			<Setter Property="MinHeight" Value="0" />
+			<Setter Property="Padding" Value="0,0,0,0" />
+
+			<Setter Property="Template">
+				<!-- start avalonia source code (i need to duplicate all this code to change just 1 thing? really?) -->
+				<ControlTemplate>
+					<Grid Name="PART_ColumnHeaderRoot"
+						  ColumnDefinitions="*,Auto"
+						  Background="{TemplateBinding Background}">
+
+						<Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+							  Margin="{TemplateBinding Padding}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition MinWidth="18" 
+												  Width="Auto" /><!-- 32 was changed to 18 -->
+							</Grid.ColumnDefinitions>
+
+							<ContentPresenter Content="{TemplateBinding Content}"
+											  ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+							<Path Name="SortIcon"
+								  Grid.Column="1"
+								  Fill="{TemplateBinding Foreground}"
+								  HorizontalAlignment="Center"
+								  VerticalAlignment="Center"
+								  Stretch="Uniform"
+								  Height="12" />
+						</Grid>
+
+						<Rectangle Name="VerticalSeparator"
+								   Grid.Column="1"
+								   Width="1"
+								   VerticalAlignment="Stretch"
+								   Fill="{TemplateBinding SeparatorBrush}"
+								   IsVisible="{TemplateBinding AreSeparatorsVisible}" />
+
+						<!-- Grid x:Name="FocusVisual" was removed here, its not needed and seems to cause trouble -->
+					</Grid>
+				</ControlTemplate>
+				<!-- end avalonia source code -->
+			</Setter>
+		</Style>
+
+		<Style Selector="DataGridColumnHeader TextBlock">
+			<Setter Property="Margin" Value="5,5,5,5" />
+		</Style>
+
+		<Style Selector="DataGridRow:nth-child(odd)">
+			<Setter Property="Background" Value="#3f000000" />
+		</Style>
+
+		<Style Selector="TextBox">
+			<Setter Property="BorderThickness" Value="0" />
+		</Style>
+
+		<Style Selector=":is(TopLevel)">
+			<Setter Property="FontFamily" Value="" />
+		</Style>
+
+		<!-- not sure why, but for some reason the ui goes too far into the left side, reaching into the void -->
+		<Style Selector="Window[WindowState=Maximized]">
+			<Setter Property="Padding" Value="8,5,0,0" />
+		</Style>
+
+	</Application.Styles>
+
 </Application>

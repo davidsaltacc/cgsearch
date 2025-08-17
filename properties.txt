@@ -1,0 +1,3 @@
+name=CGSearch
+exename=CGSearchUI
+version=0.1

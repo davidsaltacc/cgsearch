@@ -15,8 +15,6 @@ def get_links_steamrip(name):
     ]
     
     name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
-    
-    results = [] 
 
     for pair_ in name_link_filtered:
         
@@ -39,11 +37,15 @@ def get_links_steamrip(name):
 
             all_link_pairs.append([parent_text, absolutify_url(button.get("href", ""), newUrl), "Torrent" if "torrent" in button.decode_contents().lower() else "Direct"])
 
-        results.append({
+        yield {
             "RepackTitle": pair[0],
-            "Provider": "SteamRIP",
             "DownloadLinks": all_link_pairs,
             "Score": score
-        })
-        
-    return results
+        }
+
+generator = get_links_steamrip
+engine_meta = {
+    "id": "steamrip",
+    "name": "SteamRIP",
+    "description": "https://steamrip.com/ is one of the bigger piracy sites, providing direct downloads to pre-installed games (no installer)."
+}

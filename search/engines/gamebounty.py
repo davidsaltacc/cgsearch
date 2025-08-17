@@ -25,13 +25,28 @@ def get_links_gamebounty(name):
         
         link = "https://gamebounty.world/download/" + data["Slug"]
 
-        results.append({
+        yield {
             "RepackTitle": title,
-            "Provider": "GameBounty",
             "DownloadLinks": [
                 ["Download Game", link, "Direct"] # hardcode title, no need to parse, just saves us effort honestly
             ],
             "Score": score
-        })
+        }
 
-    return results
+generator = get_links_gamebounty
+engine_meta = {
+    "id": "gamebounty",
+    "name": "GameBounty",
+    "description": "https://gamebounty.world/ is a game piracy site trusted by fmhy, contains several games. Contains direct downloads hosted on external filehosts only."
+}
+
+# okay let me tell you a story
+# i reverse engineered what their webpacked code does exactly to load all the games
+# very early, i found a huge chunk of json data containing all the games, but they didn't have any link, only an id
+# so i reverse engineered everything, trying to figure out how they get an url from the id
+# after all that, well, lets just say i now know quite a bit more about reverse engineering webpack
+# do you want to know what the solution was in the end? 
+# yeah, none of that which i tried to find.
+# in the json blob, each game also contains a "slug" - for example, "hollow-knight" for Hollow Knight (the game).
+# yeah all you have to do is go to /(slug). god im a fucking idiot
+

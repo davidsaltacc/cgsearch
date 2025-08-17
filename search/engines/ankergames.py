@@ -25,8 +25,6 @@ def get_links_ankergames(name):
         name_link.append([text, href])
 
     name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
-    
-    results = [] 
 
     for pair_ in name_link_filtered:
         
@@ -44,11 +42,15 @@ def get_links_ankergames(name):
 
         version = soup.select_one("div.container span.animate-glow.bg-green-500").getText(strip = True)
 
-        results.append({
+        yield {
             "RepackTitle": pair[0] + " " + version,
-            "Provider": "AnkerGames",
             "DownloadLinks": all_link_pairs,
             "Score": score
-        })
+        }
 
-    return results
+generator = get_links_ankergames
+engine_meta = {
+    "id": "ankergames",
+    "name": "AnkerGames",
+    "description": "https://ankergames.net is a piracy site trusted by fmhy, which contains a selection of games. Has fast downloads as the files are not hosted on a slow file hoster."
+}

@@ -15,16 +15,18 @@ def get_links_rexagames(name):
     for post in soup.select("#elSearch_main .ipsBox .ipsStream li.ipsStreamItem"):
         if post.select_one(".ipsStreamItem__mainCell .ipsStreamItem__header .ipsStreamItem__summary span")["title"].lower() == "file":
 
-            a = post.select_one(".ipsStreamItem__mainCell .ipsStreamItem__header .ipsStreamItem__title h2 a")
+            version = post.select_one(".ipsStreamItem__mainCell .ipsStreamItem__content .ipsStreamItem__content-content .ipsList .i-color_soft")
 
-            title = a.getText(strip = True) + " " + post.select_one(".ipsStreamItem__mainCell .ipsStreamItem__content .ipsStreamItem__content-content .ipsList .i-color_soft").getText(strip = True)
-            url = a["href"]
+            if version:
 
-            all_results.append([title, url])
+                a = post.select_one(".ipsStreamItem__mainCell .ipsStreamItem__header .ipsStreamItem__title h2 a")
+
+                title = a.getText(strip = True) + " " + version.getText(strip = True)
+                url = a["href"]
+
+                all_results.append([title, url])
     
     all_results_filtered = filter_matches(name, all_results, itemname_function = lambda x: x[0])
-
-    results = []
 
     for pair_ in all_results_filtered:
 
@@ -47,13 +49,17 @@ def get_links_rexagames(name):
         if response.status_code in (301, 302, 303, 307, 308):
             link = response.headers.get("Location")
 
-        results.append({
+        yield {
             "RepackTitle": name,
-            "Provider": "RexaGames",
             "DownloadLinks": [
                 ["Download this file", link, "Direct"] # hardcode title to save effort
             ],
             "Score": score
-        })
+        }
 
-    return results
+generator = get_links_rexagames
+engine_meta = {
+    "id": "rexagames",
+    "name": "RexaGames",
+    "description": "https://rexagames.com/ is a smaller piracy site trusted by fmhy and others. It contains direct downloads to files hosted on several external filehosts."
+}
