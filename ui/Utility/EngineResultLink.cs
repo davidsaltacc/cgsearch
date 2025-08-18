@@ -1,5 +1,4 @@
-﻿
-namespace CGSearchUI
+﻿namespace CGSearchUI
 {
     public class EngineResultLink(string repackTitle, string provider, string linkName, string linkUrl, string linkType, float score)
     {

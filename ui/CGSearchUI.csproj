@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="PopupWindow.axaml.cs">
+    <Compile Update="Windows\PopupWindow.axaml.cs">
       <DependentUpon>PopupWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
