@@ -6,7 +6,7 @@ For a list of supported sites, please visit the search/engines/ folder. Sites th
 
 ## Disclaimer
 
-We do not host any files ourselves. We don't provide any pirated files, we only provide an engine to simplify the use of sites providing those files. We don't host the files nor the sites - and we do not encourage piracy.
+We do not host any files ourselves. We don't provide any illegaly uploaded files, we only provide an engine to simplify the use of sites providing those files. We don't host the files nor the sites - and we do not encourage piracy.
 
 # Contributing
 
