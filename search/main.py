@@ -14,6 +14,7 @@ import engines.steamunderground
 import engines.gamebounty 
 import engines.rexagames 
 import engines.appnetica
+import engines.gload
 
 if __name__ != "__main__":
     exit(0)
@@ -25,10 +26,12 @@ else:
         exit(0)
 
 # adjusting this order will also change the order they show up in the ui (as the secondary sort criteria after what is selected)
+# - maybe. idk. sometimes the order just feels random as fuck
 all_engines = [
     engines.fitgirl, 
     engines.steamrip,
     engines.gamebounty, 
+    engines.gload,
     engines.ankergames, 
     engines.rexagames,
     engines.appnetica,
@@ -48,6 +51,8 @@ if sys.argv[1] == "Debug":
         if engine in eng_.engine_meta["id"]:
             pprint(list(eng_.generator(query)))
             exit(0)
+    
+    exit(0)
 
 excluded_engines = []
 
@@ -118,7 +123,6 @@ while True:
 
 # TODO upload date in data?
 # TODO https://g4u.to/ maybe?
-# TODO https://gload.to/?s=TERM hell yeah, but include the small title under the game title instead. coz that includes version and platform etc etc
 # TODO https://gamesdrive.net/ maybe? maybe also filter out updates, some are updates some are full releases i think
 # TODO https://www.myabandonware.com/ maybe? (filter out the ones that don't provide a download link but show a purchase button instead)
 # TODO https://www.old-games.ru/ maybe?
