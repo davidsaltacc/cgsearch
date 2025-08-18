@@ -1,4 +1,5 @@
 import json
+import sys
 from threading import Thread, Event
 from helpers import read_message, send_message, safe_generator
 
@@ -12,20 +13,41 @@ import engines.ankergames
 import engines.steamunderground 
 import engines.gamebounty 
 import engines.rexagames 
+import engines.appnetica
 
 if __name__ != "__main__":
     exit(0)
 
+if len(sys.argv) <= 1:
+    exit(0)
+else:
+    if not sys.argv[1] == "CGSearch" and not sys.argv[1] == "Debug":
+        exit(0)
+
+# adjusting this order will also change the order they show up in the ui (as the secondary sort criteria after what is selected)
 all_engines = [
-    engines.steamrip,
     engines.fitgirl, 
-    engines.elamigos, 
-    engines.byxatab, 
-    engines.ankergames, 
-    engines.steamunderground, 
+    engines.steamrip,
     engines.gamebounty, 
-    engines.rexagames
+    engines.ankergames, 
+    engines.rexagames,
+    engines.appnetica,
+    engines.steamunderground, 
+    engines.byxatab, 
+    engines.elamigos
 ]
+
+if sys.argv[1] == "Debug":
+
+    from pprint import pprint
+
+    query = input("Query? ")
+    engine = input("Engine? ")
+
+    for eng_ in all_engines:
+        if engine in eng_.engine_meta["id"]:
+            pprint(list(eng_.generator(query)))
+            exit(0)
 
 excluded_engines = []
 
@@ -95,11 +117,6 @@ while True:
             excluded_engines.remove(engine_id)
 
 # TODO upload date in data?
-# TODO also helper functions for finding data on things such as - descriptions for filehosters (get link url and link name, filter out common filehosts), descriptions for repack providers - either directly force in results, or add only in helper - probably helper though
-# TODO a homepage link also attached in results - with the repackers page on this game
-# TODO add support for parsing filecrypt.cc and similar sites directly and expanding them into more links
-# TODO https://m4ckd0ge-repacks.site/all-repacks.html - doesn't have many repacks, but many filehosts i guess - and may grow in the future? search in the <a>'s href's, i guess - as there is no exact search feature 
-# TODO https://appnetica.com/games maybe? (includes a version thing, include that in displayed title!)
 # TODO https://g4u.to/ maybe?
 # TODO https://gload.to/?s=TERM hell yeah, but include the small title under the game title instead. coz that includes version and platform etc etc
 # TODO https://gamesdrive.net/ maybe? maybe also filter out updates, some are updates some are full releases i think

@@ -23,13 +23,41 @@ def get_links_gamebounty(name):
         
         link = "https://gamebounty.world/download/" + data["Slug"]
 
-        yield {
-            "RepackTitle": title,
-            "LinkName": "Download Game", # hardcode title, no need to parse, just saves us effort honestly
-            "LinkUrl": link,
-            "LinkType": "Direct",
-            "Score": score
-        }
+        data = requests.get(link).text
+    
+        soup = BeautifulSoup(data, "html.parser")
+
+        cc_info = json.loads(soup.select_one("#__NEXT_DATA__").encode_contents())["props"]["pageProps"].get("customContainerInfo")
+        if not cc_info:
+            continue
+
+        all_mirrors = cc_info.get("mirrors")
+        if not all_mirrors:
+            continue
+
+        multiple_parts = False
+
+        for mirror in all_mirrors:
+
+            if len(mirror["links"]) == 1:
+                yield {
+                    "RepackTitle": title,
+                    "LinkName": mirror["name"],
+                    "LinkUrl": mirror["links"][0]["url"],
+                    "LinkType": "Direct",
+                    "Score": score
+                }
+            else:
+                multiple_parts = True
+
+        if multiple_parts:
+            yield {
+                "RepackTitle": title,
+                "LinkName": "Download Game (multiple hosts)", # originally just says "Download Game"
+                "LinkUrl": link,
+                "LinkType": "Direct",
+                "Score": score
+            }
 
 generator = get_links_gamebounty
 engine_meta = {

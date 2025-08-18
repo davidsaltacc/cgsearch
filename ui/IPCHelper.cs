@@ -16,7 +16,7 @@ namespace CGSearchUI
             var psi = new ProcessStartInfo
             {
                 FileName = "bin/runtime/python.exe",
-                Arguments = "main.py",
+                Arguments = "main.py CGSearch",
                 WorkingDirectory = "search",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,

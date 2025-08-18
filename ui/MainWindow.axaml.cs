@@ -137,11 +137,10 @@ namespace CGSearchUI
                         try
                         {
                             // TODO ability to include an exclude engines - functionality already exists
-                            // TODO in the gamebounty engine - if there is only one part, and there usually is, then directly provide all the filehosts as seperate links. else - just include the page to the gamebounty page containing parts
 
                             if (value == null)
                             {
-                                break;
+                                break; 
                             }
 
                             List<string> queryList = new();
@@ -150,7 +149,7 @@ namespace CGSearchUI
                             string query = JsonConvert.SerializeObject(queryList);
 
                             IPCHelper.SendMessage("lnfo", query);
-
+        
                             waitingForLinkInfo.Add(query, result =>
                             { 
                                 Dispatcher.UIThread.InvokeAsync(() =>

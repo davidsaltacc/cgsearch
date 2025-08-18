@@ -56,7 +56,7 @@ def get_links_fitgirl(name):
                     ltype = "Unsure"
                     if "filehost" in name_lower:
                         ltype = "Direct"
-                    elif "rutor" in name_lower or "1337x" in name_lower or "magnet" in name_lower or "torrent" in name_lower or "tapochek" in name_lower:
+                    elif "rutor" in name_lower or "1337x" in name_lower or "magnet" in name_lower or "torrent" in name_lower or "tapochek" in name_lower or "kat" in name_lower:
                         ltype = "Torrent"
 
                     yield {
