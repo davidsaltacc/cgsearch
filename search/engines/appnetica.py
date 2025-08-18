@@ -47,7 +47,7 @@ def get_links_appnetica(name):
         
         response.close()
         
-        link_type = "Torrent" if download_url.endswith(".torrent") else "Direct"
+        link_type = "Torrent" if download_url.split("?")[0].endswith(".torrent") else "Direct"
 
         yield {
             "RepackTitle": name + " " + version,
