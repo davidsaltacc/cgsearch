@@ -1,8 +1,9 @@
 $isPublish = ($args[0] -eq "publish") 
 $isBuild = ($args[0] -eq "build") 
+$isRuntimeInstallationOnly = ($args[0] -eq "onlyRuntime") 
 $buildTarget = $args[1]
 
-if (![System.IO.Path]::IsPathRooted($buildTarget)) {
+if ($buildTarget -and ![System.IO.Path]::IsPathRooted($buildTarget)) {
     $buildTarget = (Join-Path -Path "ui" -ChildPath $buildTarget)
 }
 
@@ -58,13 +59,21 @@ if (!(Test-Path "runtime/runtime_valid")) {
     # don't mind the stderr suppression, it makes my vs builds fail even with successful installation due to obscure reasons
 
     # a file so we can cache the runtime, so we don't have to re-download it each build
-    New-Item -Path ”runtime/runtime_valid” -ItemType File
+    New-Item -Path "runtime/runtime_valid" -ItemType File
 
 }
 
-Copy-Item "runtime" (Join-Path -Path "$buildTarget" -ChildPath "bin/runtime") -Recurse -Force
-Copy-Item "search" (Join-Path -Path "$buildTarget" -ChildPath "search") -Recurse -Force
-Copy-Item "icon.ico" -Destination "$buildTarget"
+if ($isRuntimeInstallationOnly) {
+    exit 0
+}
+
+if ($buildTarget) {
+
+    Copy-Item "runtime" (Join-Path -Path "$buildTarget" -ChildPath "bin/runtime") -Recurse -Force
+    Copy-Item "search" (Join-Path -Path "$buildTarget" -ChildPath "search") -Recurse -Force
+    Copy-Item "icon.ico" -Destination "$buildTarget"
+
+}
 
 if ($isPublish) {
 
