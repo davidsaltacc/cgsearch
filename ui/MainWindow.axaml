@@ -5,19 +5,23 @@
 		xmlns:li="using:LoadingIndicators.Avalonia"
 		xmlns:local="clr-namespace:CGSearchUI"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		MinWidth="400" MinHeight="300"
         x:Class="CGSearchUI.MainWindow"
         Title="CGSearch UI"
-		ExtendClientAreaToDecorationsHint="True">
+		ExtendClientAreaToDecorationsHint="True"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		WindowStartupLocation="CenterScreen">
 
-	<Grid RowDefinitions="30,*">
+	<Grid RowDefinitions="30,*" RenderOptions.TextRenderingMode="Antialias">
 
 		<Grid ColumnDefinitions="Auto,*" IsHitTestVisible="False" Background="#202020">
-			<Image x:Name="TitleBarIcon" Grid.Column="0" VerticalAlignment="Center" Width="18" Margin="5,0,5,0" ></Image>
-			<TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12" >CGSearch UI</TextBlock>
+			<Image x:Name="TitleBarIcon" Grid.Column="0" VerticalAlignment="Center" Width="18" Margin="5,0,5,0"></Image>
+			<TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12">CGSearch UI</TextBlock>
 		</Grid>
 
-		<DockPanel Grid.Row="1" Background="#2f2f2f">
-			
+		<DockPanel Grid.Row="1" Background="#6f101010">
+
 			<DockPanel DockPanel.Dock="Top" Margin="5" MaxHeight="32">
 				<StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
 					<li:LoadingIndicator IsActive="{Binding IsSearching}" Mode="Arcs" SpeedRatio="1.25" />
@@ -25,36 +29,42 @@
 					<Button IsEnabled="{Binding IsSearching}" Content="Cancel" Cursor="Hand" Click="CancelClicked" />
 					<Button Content="Settings" Cursor="Hand" />
 				</StackPanel>
-				<TextBox DockPanel.Dock="Left" Watermark="Search..." VerticalAlignment="Center" Margin="0,0,5,0"/>
+				<TextBox x:Name="SearchBar" DockPanel.Dock="Left" Watermark="Search..." VerticalAlignment="Center" Margin="0,0,5,0"/>
 			</DockPanel>
+			
+			<DataGrid
+				x:Name="ResultsDataGrid"
+				IsReadOnly="True"
+				CanUserReorderColumns="True"
+				CanUserResizeColumns="True"
+				CanUserSortColumns="True"
+				GridLinesVisibility="All"
+				ItemsSource="{Binding Results}"
+				VerticalScrollBarVisibility="Auto"
+				HorizontalScrollBarVisibility="Auto">
 
-			<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-				<DataGrid
-					x:Name="ResultsDataGrid"
-					IsReadOnly="True"
-					CanUserReorderColumns="True"
-					CanUserResizeColumns="True"
-					CanUserSortColumns="True"
-					GridLinesVisibility="All"
-					ItemsSource="{Binding Results}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Game Title" Binding="{Binding RepackTitle}" Width="300"/>
+					<DataGridTemplateColumn Header="Provider">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate DataType="local:EngineResultLink">
+								<TextBlock Text="{Binding Provider}" VerticalAlignment="Center" PointerPressed="ProviderCell_PointerPressed" TextDecorations="Underline" Background="Transparent" Cursor="Hand" />
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Header="Link Name" Binding="{Binding LinkName}" Width="300" />
+					<DataGridTemplateColumn Header="Link URL" Width="200">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate DataType="local:EngineResultLink">
+								<TextBlock Text="{Binding LinkUrl}" VerticalAlignment="Center" PointerPressed="LinkCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand" />
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Header="Type" Binding="{Binding LinkType}"/>
+					<DataGridTextColumn Header="Result Confidence" Binding="{Binding Score}"/>
+				</DataGrid.Columns>
 
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Game Title" Binding="{Binding RepackTitle}"/>
-						<DataGridTextColumn Header="Provider" Binding="{Binding Provider}"/>
-						<DataGridTextColumn Header="Link Name" Binding="{Binding LinkName}"/>
-						<DataGridTemplateColumn Header="Link URL" Width="200">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate DataType="local:EngineResultLink">
-									<TextBlock Text="{Binding LinkUrl}" VerticalAlignment="Center" PointerPressed="LinkCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Cursor="Hand" />
-								</DataTemplate>
-							</DataGridTemplateColumn.CellTemplate>
-						</DataGridTemplateColumn >
-						<DataGridTextColumn Header="Type" Binding="{Binding LinkType}"/>
-						<DataGridTextColumn Header="Result Confidence" Binding="{Binding Score}"/>
-					</DataGrid.Columns>
-
-				</DataGrid>
-			</ScrollViewer>
+			</DataGrid>
 		</DockPanel>
 	</Grid>
 	

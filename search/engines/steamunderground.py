@@ -25,20 +25,20 @@ def get_links_steamunderground(name):
     
         soup = BeautifulSoup(data, "html.parser")
 
-        all_link_pairs = [
-            [a.get_text(strip = True), a["href"], "Direct"] # only direct downloads
-            for a in soup.select(".download-mirrors-container .DownloadButtonContainer a.enjoy-css")
-        ]
-
-        yield {
-            "RepackTitle": pair[0],
-            "DownloadLinks": all_link_pairs,
-            "Score": score
-        }
+        for a in soup.select(".download-mirrors-container .DownloadButtonContainer a.enjoy-css"):
+            
+            yield {
+                "RepackTitle": pair[0],
+                "LinkName": a.get_text(strip = True),
+                "LinkUrl": a["href"],
+                "LinkType": "Direct", # only direct downloads
+                "Score": score
+            }
 
 generator = get_links_steamunderground
 engine_meta = {
     "id": "steamunderground",
     "name": "SteamUnderground",
-    "description": "https://steamunderground.net/ is a game piracy site trusted by fmhy offering direct downloads."
+    "homepage": "https://steamunderground.net/",
+    "description": "SteamUnderground is a game piracy site trusted by fmhy offering direct downloads."
 }

@@ -2,6 +2,8 @@ import json
 from threading import Thread, Event
 from helpers import read_message, send_message, safe_generator
 
+import stats.link_warnings
+
 import engines.steamrip 
 import engines.fitgirl 
 import engines.elamigos 
@@ -73,6 +75,15 @@ while True:
         for eng in all_engines:
             data[eng.engine_meta["id"]] = eng.engine_meta
         send_message(b"egns", json.dumps(data).encode())
+    
+    if msg_type == b"lnfo": # get potential warnings about link
+        data = {
+            "query": msg_data.decode()
+        }
+        result = stats.link_warnings.information_filehost(json.loads(msg_data.decode()))
+        if result:
+            data["message"] = result
+        send_message(b"lnfo", json.dumps(data).encode())
     
     if msg_type == b"xegn": # exclude/include engine from search
         data = json.loads(msg_data)

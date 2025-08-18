@@ -13,8 +13,6 @@ def get_links_gamebounty(name):
 
     # their search engine requires javascript, better to just filter manually
     all_results_filtered = filter_matches(name, all_results, itemname_function = lambda x: x["Title"], min_score = 0.85) 
-    
-    results = [] 
 
     for pair_ in all_results_filtered:
         
@@ -27,9 +25,9 @@ def get_links_gamebounty(name):
 
         yield {
             "RepackTitle": title,
-            "DownloadLinks": [
-                ["Download Game", link, "Direct"] # hardcode title, no need to parse, just saves us effort honestly
-            ],
+            "LinkName": "Download Game", # hardcode title, no need to parse, just saves us effort honestly
+            "LinkUrl": link,
+            "LinkType": "Direct",
             "Score": score
         }
 
@@ -37,7 +35,8 @@ generator = get_links_gamebounty
 engine_meta = {
     "id": "gamebounty",
     "name": "GameBounty",
-    "description": "https://gamebounty.world/ is a game piracy site trusted by fmhy, contains several games. Contains direct downloads hosted on external filehosts only."
+    "homepage": "https://gamebounty.world/",
+    "description": "GameBounty is a game piracy site trusted by fmhy, contains several games. Contains direct downloads hosted on external filehosts only."
 }
 
 # okay let me tell you a story

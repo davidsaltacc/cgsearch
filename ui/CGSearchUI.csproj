@@ -24,6 +24,12 @@
     <PackageReference Include="nulastudio.NetBeauty" Version="2.1.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="PopupWindow.axaml.cs">
+      <DependentUpon>PopupWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 	<Target Name="MakeInstaller" AfterTargets="NetBeautyOnPublish_Fx">
 		<Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File post_build.ps1 publish $(PublishDir)" WorkingDirectory="../" />
 	</Target>

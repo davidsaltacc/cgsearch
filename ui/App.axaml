@@ -18,8 +18,15 @@
 
 	<Application.Styles>
         <FluentTheme />
+		
+		<Style Selector="DataGridCell">
+			<Setter Property="Focusable" Value="False"/>
+		</Style>
 
 		<Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
+			<Setter Property="IsVisible" Value="False" />
+		</Style>
+		<Style Selector="DataGrid:focus-visible DataGridCell:current /template/ Grid#FocusVisual">
 			<Setter Property="IsVisible" Value="False" />
 		</Style>
 
@@ -86,7 +93,7 @@
 		<Style Selector="DataGridRow:nth-child(odd)">
 			<Setter Property="Background" Value="#3f000000" />
 		</Style>
-
+		
 		<Style Selector="TextBox">
 			<Setter Property="BorderThickness" Value="0" />
 		</Style>
@@ -97,7 +104,7 @@
 
 		<!-- not sure why, but for some reason the ui goes too far into the left side, reaching into the void -->
 		<Style Selector="Window[WindowState=Maximized]">
-			<Setter Property="Padding" Value="8,5,0,0" />
+			<Setter Property="Padding" Value="8,5,8,8" />
 		</Style>
 
 	</Application.Styles>

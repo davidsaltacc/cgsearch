@@ -37,29 +37,27 @@ def get_links_elamigos(name):
     
         soup = BeautifulSoup(data, "html.parser")
 
-        all_link_pairs = []
-
         for h2 in soup.select("h2"):
-            pairs = []
             el = h2.find_next_sibling()
             while el and el.name == "h3":
                 a = el.find("a")
                 if not a:
                     break
                 href = a.get("href", "")
-                pairs.append([h2.get_text(strip = True), href, "Direct"]) # elamigos does not provide torrents, as far as i am aware
                 el = el.find_next_sibling()
-            all_link_pairs.extend(pairs)
     
-        yield {
-            "RepackTitle": pair[0],
-            "DownloadLinks": all_link_pairs,
-            "Score": score
-        }
+                yield {
+                    "RepackTitle": pair[0],
+                    "LinkName": h2.get_text(strip = True),
+                    "LinkUrl": href,
+                    "LinkType": "Direct", # elamigos does not provide torrents, as far as i am aware
+                    "Score": score
+                }
 
 generator = get_links_elamigos
 engine_meta = {
     "id": "elamigos",
     "name": "ElAmigos",
-    "description": "https://elamigos.site/ is a site with a number of repacks. The repacks are only hosted on slow download providers, so your downloads will take a very long time if you don't pay for the hoster's premium option."
+    "homepage": "https://elamigos.site/",
+    "description": "ElAmigos is a site with a number of repacks. The repacks are only hosted on slow download providers, so your downloads will take a very long time if you don't pay for the hoster's premium option."
 }

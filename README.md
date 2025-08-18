@@ -1,3 +1,5 @@
+# TODO EDIT THIS - SOME THINGS ARE NOT UP TO DATE
+
 # CGSearch 
 
 A search engine with a bunch of QOL features for games from "non-steam" sources. I don't know how much I can say here without getting the repository removed, although im pretty sure the functionality alone will not, as all it does is act as a search engine, which doesn't actually host any files.

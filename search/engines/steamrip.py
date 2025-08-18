@@ -26,8 +26,6 @@ def get_links_steamrip(name):
     
         soup = BeautifulSoup(data, "html.parser")
 
-        all_link_pairs = []
-
         for button in soup.select(".entry-content p a.shortc-button.medium"):
             
             if "download" not in button.decode_contents().lower() or "torrent" not in button.decode_contents().lower():
@@ -35,17 +33,18 @@ def get_links_steamrip(name):
 
             parent_text = button.parent.get_text("\n", strip = True).split("\n")[0]
 
-            all_link_pairs.append([parent_text, absolutify_url(button.get("href", ""), newUrl), "Torrent" if "torrent" in button.decode_contents().lower() else "Direct"])
-
-        yield {
-            "RepackTitle": pair[0],
-            "DownloadLinks": all_link_pairs,
-            "Score": score
-        }
+            yield {
+                "RepackTitle": pair[0],
+                "LinkName": parent_text,
+                "LinkUrl": absolutify_url(button.get("href", ""), newUrl),
+                "LinkType": "Torrent" if "torrent" in button.decode_contents().lower() else "Direct",
+                "Score": score
+            }
 
 generator = get_links_steamrip
 engine_meta = {
     "id": "steamrip",
     "name": "SteamRIP",
-    "description": "https://steamrip.com/ is one of the bigger piracy sites, providing direct downloads to pre-installed games (no installer)."
+    "homepage": "https://steamrip.com/",
+    "description": "SteamRIP is one of the larger piracy sites, providing direct downloads (and occasionally torrents) to pre-installed games (no installer)."
 }

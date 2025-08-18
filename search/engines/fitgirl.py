@@ -31,17 +31,16 @@ def get_links_fitgirl(name):
     
         soup = BeautifulSoup(data, "html.parser")
     
-        filtered = ["jdownloader2", "internetdownloadmanager"]
+        filtered = ["jdownloader2", "internetdownloadmanager", # download managers
+                    "nexusmods", "mixmods", "libertycity"] # mods
         
-        all_link_pairs = []
-
         for li in soup.select("article.post ul li"):
             a_tags = li.find_all("a")
 
             for a in a_tags:
                 valid = True
                 
-                parent = a.parent # my syntax highlighting does not like it, but ["parent"] does not work while .parent does
+                parent = a.parent 
                 if parent and parent.get("class"):
                     classes = parent.get("class")
                     if any("spoiler" in c.lower() for c in (classes if isinstance(classes, list) else [classes])):
@@ -59,18 +58,19 @@ def get_links_fitgirl(name):
                         ltype = "Direct"
                     elif "rutor" in name_lower or "1337x" in name_lower or "magnet" in name_lower or "torrent" in name_lower or "tapochek" in name_lower:
                         ltype = "Torrent"
-                    all_link_pairs.append([a.get_text(strip = True), absolutify_url(href, newUrl), ltype])
 
-        if all_link_pairs:
-            yield {
-                "RepackTitle": pair[0],
-                "DownloadLinks": all_link_pairs,
-                "Score": score
-            }
+                    yield {
+                        "RepackTitle": pair[0],
+                        "LinkName": a.get_text(strip = True),
+                        "LinkUrl": absolutify_url(href, newUrl),
+                        "LinkType": ltype,
+                        "Score": score
+                    }
 
 generator = get_links_fitgirl
 engine_meta = {
     "id": "fitgirl",
     "name": "FitGirl",
-    "description": "https://fitgirl-repacks.site/ is one of the most popular game piracy sites, trusted by many. Contains a lot of games, fast direct file hosts aswell as torrent options."
+    "homepage": "https://fitgirl-repacks.site/",
+    "description": "FitGirl is one of the most popular game piracy sites, trusted by many. Contains a lot of games, fast direct file hosts aswell as torrent options."
 }

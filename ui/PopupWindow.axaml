@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" MinHeight="150" MinWidth="300"
+		SizeToContent="WidthAndHeight"
+		MaxWidth="400"
+        x:Class="CGSearchUI.PopupWindow"
+        Title="CGSearch Popup"
+		Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
+		WindowStartupLocation="CenterOwner">
+
+	<Grid RowDefinitions="30,*" RenderOptions.TextRenderingMode="Antialias" Background="#6f101010">
+
+		<Grid ColumnDefinitions="Auto,*" IsHitTestVisible="False" Background="#202020">
+			<Image x:Name="TitleBarIcon" Grid.Column="0" VerticalAlignment="Center" Width="18" Margin="5,0,5,0"></Image>
+			<TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12">CGSearch UI</TextBlock>
+		</Grid>
+
+		<StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Vertical">
+
+			<TextBlock HorizontalAlignment="Center" Padding="20" Text="{Binding TextContent}" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+
+				<Button Content="{Binding Button1Content}" Click="Button1Clicked"></Button>
+				<Button Content="{Binding Button2Content}" Click="Button2Clicked"></Button>
+				
+			</StackPanel>
+
+		</StackPanel>
+		
+	</Grid>
+	
+</Window>

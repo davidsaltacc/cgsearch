@@ -36,15 +36,13 @@ def get_links_ankergames(name):
     
         soup = BeautifulSoup(data, "html.parser")
 
-        all_link_pairs = [
-            [ "Download",  newUrl, "Direct" ] # they host it directly on their website 
-        ]
-
         version = soup.select_one("div.container span.animate-glow.bg-green-500").getText(strip = True)
 
         yield {
             "RepackTitle": pair[0] + " " + version,
-            "DownloadLinks": all_link_pairs,
+            "LinkName": "Download",
+            "LinkUrl": newUrl,
+            "LinkType": "Direct", # they host it directly on their website 
             "Score": score
         }
 
@@ -52,5 +50,6 @@ generator = get_links_ankergames
 engine_meta = {
     "id": "ankergames",
     "name": "AnkerGames",
-    "description": "https://ankergames.net is a piracy site trusted by fmhy, which contains a selection of games. Has fast downloads as the files are not hosted on a slow file hoster."
+    "homepage": "https://ankergames.net",
+    "description": "AnkerGames is a piracy site trusted by fmhy, which contains a selection of games. Has fast downloads as the files are not hosted on a slow file hoster."
 }

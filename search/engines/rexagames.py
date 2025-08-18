@@ -51,9 +51,9 @@ def get_links_rexagames(name):
 
         yield {
             "RepackTitle": name,
-            "DownloadLinks": [
-                ["Download this file", link, "Direct"] # hardcode title to save effort
-            ],
+            "LinkName": "Download this file", # hardcode title to save effort
+            "LinkUrl": link,
+            "LinkType": "Direct",
             "Score": score
         }
 
@@ -61,5 +61,6 @@ generator = get_links_rexagames
 engine_meta = {
     "id": "rexagames",
     "name": "RexaGames",
-    "description": "https://rexagames.com/ is a smaller piracy site trusted by fmhy and others. It contains direct downloads to files hosted on several external filehosts."
+    "homepage": "https://rexagames.com/",
+    "description": "RexaGames is a smaller piracy site trusted by fmhy and others. It contains direct downloads to files hosted on several external filehosts."
 }
