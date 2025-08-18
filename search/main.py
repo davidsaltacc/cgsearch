@@ -15,6 +15,7 @@ import engines.gamebounty
 import engines.rexagames 
 import engines.appnetica
 import engines.gload
+import engines.releasebb
 
 if __name__ != "__main__":
     exit(0)
@@ -36,7 +37,8 @@ all_engines = [
     engines.rexagames,
     engines.appnetica,
     engines.steamunderground, 
-    engines.byxatab, 
+    engines.byxatab,
+    engines.releasebb, 
     engines.elamigos
 ]
 
@@ -122,10 +124,6 @@ while True:
             excluded_engines.remove(engine_id)
 
 # TODO upload date in data?
-# TODO https://g4u.to/ maybe?
-# TODO https://gamesdrive.net/ maybe? maybe also filter out updates, some are updates some are full releases i think
 # TODO https://www.myabandonware.com/ maybe? (filter out the ones that don't provide a download link but show a purchase button instead)
 # TODO https://www.old-games.ru/ maybe?
-# TODO https://rlsbb.ru/ maybe?
-# TODO https://scnlog.me/games/?s=TERM is eh, but still maybe maybe maybe
 # TODO https://oldgamesdownload.com/?s=TERM maybe? maybe
