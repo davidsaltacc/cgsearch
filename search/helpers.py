@@ -31,9 +31,12 @@ def send_message(type: bytes, data: bytes):
     sys.stdout.buffer.flush()
 
 def safe_generator(generator, onerror):
-    for item in generator:
+    while True:
         try:
-            yield item
+            item = next(generator)
+        except StopIteration:
+            break
         except Exception as e:
             onerror(e)
             continue
+        yield item
