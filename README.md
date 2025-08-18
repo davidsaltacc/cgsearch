@@ -4,6 +4,10 @@ A search engine with a bunch of QOL features for games from "non-steam" sources.
 
 For a list of supported sites, please visit the search/engines/ folder. Sites that require javascript for their search to function, or ones that are protected by Cloudflare are currently not supported, as we only parse the static html data, although this may be subject to change in the future.
 
+## Disclaimer
+
+We do not host any files ourselves. We don't provide any pirated files, we only provide an engine to simplify the use of sites providing those files. We don't host the files nor the sites - and we do not encourage piracy.
+
 # Contributing
 
 First you always have to clone the repository. Then, depending on what you want to do, you may or may not need to build the project from source. 
