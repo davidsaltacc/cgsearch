@@ -48,6 +48,9 @@ def get_links_rexagames(name):
         # if we didn't do this, users would get hit with a "nuh uh" due to a missing or invalid cookie that only we have here
         if response.status_code in (301, 302, 303, 307, 308):
             link = response.headers.get("Location")
+        
+        if "rexagames.com" in urllib.parse.urlparse(link).netloc:
+            link = url
 
         yield {
             "RepackTitle": name,
