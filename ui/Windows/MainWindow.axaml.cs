@@ -13,7 +13,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -136,9 +135,8 @@ namespace CGSearchUI
                     {
                         try
                         {
-                            // TODO ability to include an exclude engines - functionality already exists
 
-                            if (value == null)
+                            if (value == null) 
                             {
                                 break; 
                             }
@@ -154,12 +152,12 @@ namespace CGSearchUI
                             { 
                                 Dispatcher.UIThread.InvokeAsync(() =>
                                 {
-                                    var popuptext = "Do you want to open this with " + GetAssociatedApp((string)value) + "?";
+                                    var popuptext = "Do you want to open this with " + SystemHelpers.GetAssociatedApp((string) value) + "?";
                                     popuptext = (result != null) ? result + "\n\n" + popuptext : popuptext;
 
                                     var popup = new PopupWindow(popuptext, "Okay", "Cancel", (popup) =>
                                     {
-                                        Process.Start(new ProcessStartInfo((string)value) { UseShellExecute = true });
+                                        Process.Start(new ProcessStartInfo((string) value) { UseShellExecute = true });
                                         popup.Close();
                                     }, (popup) =>
                                     {
@@ -195,7 +193,7 @@ namespace CGSearchUI
                         {
                             popup.Close();
 
-                            var popup2 = new PopupWindow("Do you want to open this with " + GetAssociatedApp(homepage) + "?", "Okay", "Cancel", (popup2) =>
+                            var popup2 = new PopupWindow("Do you want to open this with " + SystemHelpers.GetAssociatedApp(homepage) + "?", "Okay", "Cancel", (popup2) =>
                             {
                                 Process.Start(new ProcessStartInfo(homepage) { UseShellExecute = true });
                                 popup2.Close();
@@ -247,62 +245,10 @@ namespace CGSearchUI
             IPCHelper.SendMessage("cncl", "");
         }
 
-
-        [Flags]
-        private enum AssocF : uint
+        void SettingsClicked(object? sender, RoutedEventArgs e)
         {
-            None = 0
-        }
-
-        private enum AssocStr
-        {
-            Executable = 2,
-            FriendlyAppName = 4 
-        }
-
-        [DllImport("Shlwapi.dll", CharSet = CharSet.Unicode)]
-        private static extern uint AssocQueryString(
-            AssocF flags,
-            AssocStr str,
-            string pszAssoc,
-            string? pszExtra,
-            [Out] StringBuilder? pszOut,
-            ref uint pcchOut);
-
-        static string? GetAssociatedApp(string value, bool friendlyName = true)
-        {
-            string assocKey;
-
-            if (Uri.TryCreate(value, UriKind.Absolute, out var uri))
-            {
-                assocKey = uri.Scheme;
-            }
-            else if (value.StartsWith('.'))
-            {
-                assocKey = value; 
-            }
-            else
-            {
-                assocKey = value;
-            }
-
-            if (assocKey == null)
-            {
-                return null;
-            }
-
-            uint length = 0;
-            AssocStr assocStr = friendlyName ? AssocStr.FriendlyAppName : AssocStr.Executable;
-
-            AssocQueryString(AssocF.None, assocStr, assocKey, null, null, ref length);
-
-            var sb = new StringBuilder((int)length);
-            if (AssocQueryString(AssocF.None, assocStr, assocKey, null, sb, ref length) == 0)
-            {
-                return sb.ToString();
-            }
-
-            return null;
+            var settings = new SettingsWindow();
+            settings.Show(this);
         }
 
     }

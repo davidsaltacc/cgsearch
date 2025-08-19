@@ -27,7 +27,7 @@
 					<li:LoadingIndicator IsActive="{Binding IsSearching}" Mode="Arcs" SpeedRatio="1.25" />
 					<Button IsEnabled="{Binding !IsSearching}" Content="Search" Cursor="Hand" Click="SearchClicked" />
 					<Button IsEnabled="{Binding IsSearching}" Content="Cancel" Cursor="Hand" Click="CancelClicked" />
-					<Button Content="Settings" Cursor="Hand" />
+					<Button Content="Settings" Cursor="Hand" Click="SettingsClicked" />
 				</StackPanel>
 				<TextBox x:Name="SearchBar" DockPanel.Dock="Left" Watermark="Search..." VerticalAlignment="Center" Margin="0,0,5,0"/>
 			</DockPanel>

@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="400" Height="600"
+		xmlns:local="clr-namespace:CGSearchUI"
+        x:Class="CGSearchUI.SettingsWindow"
+        Title="CGSearch Settings"
+		WindowStartupLocation="CenterOwner"
+		ExtendClientAreaToDecorationsHint="True"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
+	
+	<Grid RowDefinitions="30,*" RenderOptions.TextRenderingMode="Antialias">
+
+		<Grid ColumnDefinitions="Auto,*" IsHitTestVisible="False" Background="#202020">
+			<Image x:Name="TitleBarIcon" Grid.Column="0" VerticalAlignment="Center" Width="18" Margin="5,0,5,0"></Image>
+			<TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12">CGSearch Settings</TextBlock>
+		</Grid>
+
+		<TabControl Grid.Row="1" Background="#6f101010">
+			<TabItem Header="General">
+				<Border>
+					<StackPanel>
+						<TextBlock TextWrapping="Wrap">Here you can configure general settings.</TextBlock>
+					</StackPanel>
+				</Border>
+			</TabItem>
+			<TabItem Header="Engines">
+				<Border>
+					<StackPanel>
+						<TextBlock TextWrapping="Wrap">Here you can configure what engines get included in the search results.</TextBlock>
+					</StackPanel>
+				</Border>
+			</TabItem>
+		</TabControl>
+
+	</Grid>
+</Window>

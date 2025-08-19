@@ -28,6 +28,9 @@
     <Compile Update="Windows\PopupWindow.axaml.cs">
       <DependentUpon>PopupWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Windows\SettingsWindow.axaml.cs">
+      <DependentUpon>SettingsWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 	<Target Name="MakeInstaller" AfterTargets="NetBeautyOnPublish_Fx">

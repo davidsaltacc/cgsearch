@@ -18,7 +18,54 @@
 
 	<Application.Styles>
         <FluentTheme />
+
+		<Style Selector="TabItem">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="BorderBrush" Value="#2f2f2f" />
+			<Setter Property="BorderThickness" Value="0,1,0,0" />
+			<Setter Property="CornerRadius" Value="4,4,0,0" />
+			<Setter Property="Background" Value="#4f202020" />
+			<Setter Property="Foreground" Value="#ffffff" />
+			<Setter Property="Padding" Value="12,8,12,8" />
+			<Setter Property="Margin" Value="0" />
+			<Setter Property="MinHeight" Value="0"/>
+		</Style>
+
+		<Style Selector="TabItem:selected /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="#4f505050"/>
+			<Setter Property="BorderBrush" Value="#4f4f4f" />
+		</Style>
+		<Style Selector="TabItem:pointerover /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="#4f303030"/>
+			<Setter Property="TextElement.Foreground" Value="#ffffff" />
+		</Style>
+		<Style Selector="TabItem:selected:pointerover /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="#4f505050"/>
+		</Style>
+		<Style Selector="TabItem:pressed /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="#4f505050"/>
+		</Style>
 		
+		<Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
+			<Setter Property="IsVisible" Value="False" />
+		</Style>
+
+		<!-- only when trying to figure how to get rid of this margin (why the fuck is it there in the first place?) i learned about the existence of avalonia's devtools hidden behind the f12 key -->
+		<Style Selector="TabControl[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
+			<Setter Property="Margin" Value="0"/>
+		</Style>
+
+		<Style Selector="TabControl">
+			<Setter Property="Margin" Value="0" />
+			<Setter Property="Padding" Value="0" />
+		</Style>
+
+		<Style Selector="TabItem Border">
+			<Setter Property="Margin" Value="0" />
+			<Setter Property="BorderBrush" Value="#2f2f2f" />
+			<Setter Property="BorderThickness" Value="0,1,0,0" />
+		</Style>
+
 		<Style Selector="DataGridCell">
 			<Setter Property="Focusable" Value="False"/>
 		</Style>
