@@ -16,6 +16,7 @@ import engines.rexagames
 import engines.appnetica
 import engines.gload
 import engines.releasebb
+import engines.unioncrax
 
 if __name__ != "__main__":
     exit(0)
@@ -36,6 +37,7 @@ all_engines = [
     engines.ankergames, 
     engines.rexagames,
     engines.appnetica,
+    engines.unioncrax,
     engines.steamunderground, 
     engines.byxatab,
     engines.releasebb, 
@@ -85,6 +87,9 @@ while True:
                         send_message(b"done", b"")
                         return
 
+                    if (len(result["LinkUrl"].strip()) == 0):
+                        continue
+
                     send_message(b"link", json.dumps({ 
                         "engine_id": engine.engine_meta["id"],
                         "result": result
@@ -123,7 +128,19 @@ while True:
         if action == "include" and engine_id in excluded_engines:
             excluded_engines.remove(engine_id)
 
+# TODO https://romheaven.com/csf maybe - add "uncracked" to names, otherwise people may end up confused
+# TODO https://gamepcfull.com/?s=QUERY
+# TODO https://www.cg-gamespc.com/games?game=QUERY
+# TODO https://worldofpcgames.com/?s=QUERY
+# TODO https://getfreegames.net/?s=QUERY
+# TODO https://triahgames.com/?s=QUERY
+# TODO https://reloadedsteam.com/?s=QUERY
+# TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
+# TODO https://atopgames.com/?s=QUERY
+# TODO https://fluxyrepacks.xyz/games
+# TODO https://steamgg.net/?s=QUERY&post_type%5B%5D=portfolio&post_type%5B%5D=post&post_type%5B%5D=page
+# TODO https://freegogpcgames.com/?s=QUERY
 # TODO upload date in data?
 # TODO https://www.myabandonware.com/ maybe? (filter out the ones that don't provide a download link but show a purchase button instead)
 # TODO https://www.old-games.ru/ maybe?
-# TODO https://oldgamesdownload.com/?s=TERM maybe? maybe
+# TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
