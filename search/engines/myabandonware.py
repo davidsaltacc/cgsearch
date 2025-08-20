@@ -14,20 +14,22 @@ def get_links_myabandonware(name):
         for a in soup.select("div#content .games .item a.c-item-game__name")
     ]
 
-    for pair_ in name_link:
+    name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0])
+
+    for pair_ in name_link_filtered:
 
         pair = pair_[0]
         score = pair_[1]
         
-        newUrl = absolutify_url(pair[1], "https://www.myabandonware.com/")
+        newUrl = absolutify_url(pair[1], "https://www.myabandonware.com/search/")
         data = requests.get(newUrl).text
     
         soup = BeautifulSoup(data, "html.parser")
 
         if soup.select_one("div#download"):
             yield { 
-                "RepackTitle": name,
-                "LinkName": pair[0],
+                "RepackTitle": pair[0], 
+                "LinkName": "Download from MyAbandonware",
                 "LinkUrl": newUrl + "#download", # several links sometimes, just link the user to the page so they can get what they want
                 "LinkType": "Direct",
                 "Score": score
