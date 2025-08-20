@@ -17,6 +17,9 @@ import engines.appnetica
 import engines.gload
 import engines.releasebb
 import engines.unioncrax
+import engines.freegogpcgames
+import engines.fluxyrepacks
+import engines.myabandonware
 
 if __name__ != "__main__":
     exit(0)
@@ -33,15 +36,18 @@ all_engines = [
     engines.fitgirl, 
     engines.steamrip,
     engines.gamebounty, 
+    engines.freegogpcgames, 
     engines.gload,
     engines.ankergames, 
     engines.rexagames,
+    engines.fluxyrepacks,
     engines.appnetica,
     engines.unioncrax,
     engines.steamunderground, 
     engines.byxatab,
     engines.releasebb, 
-    engines.elamigos
+    engines.elamigos,
+    engines.myabandonware
 ]
 
 if sys.argv[1] == "Debug":
@@ -137,10 +143,6 @@ while True:
 # TODO https://reloadedsteam.com/?s=QUERY
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://atopgames.com/?s=QUERY
-# TODO https://fluxyrepacks.xyz/games
 # TODO https://steamgg.net/?s=QUERY&post_type%5B%5D=portfolio&post_type%5B%5D=post&post_type%5B%5D=page
-# TODO https://freegogpcgames.com/?s=QUERY
-# TODO upload date in data?
-# TODO https://www.myabandonware.com/ maybe? (filter out the ones that don't provide a download link but show a purchase button instead)
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe

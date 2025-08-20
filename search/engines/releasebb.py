@@ -32,12 +32,12 @@ def get_links_releasebb(name):
         for a in post.select(".entry-summary p")[-1].select("a"):
 
             yield {
-            "RepackTitle": name,
-            "LinkName": a.getText(strip = True),
-            "LinkUrl": a["href"],
-            "LinkType": "Direct",
-            "Score": score
-        }
+                "RepackTitle": name,
+                "LinkName": a.getText(strip = True),
+                "LinkUrl": a["href"],
+                "LinkType": "Direct",
+                "Score": score
+            }
 
 generator = get_links_releasebb
 engine_meta = {
