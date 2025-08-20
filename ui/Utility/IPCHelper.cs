@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -7,6 +8,8 @@ namespace CGSearchUI
 {
     class IPCHelper
     {
+
+        static public JObject? engines;
 
         static Stream? PyStdin;
         static Stream? PyStdout;

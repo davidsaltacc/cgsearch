@@ -23,8 +23,6 @@ namespace CGSearchUI
 
         public ObservableCollection<EngineResultLink> Results { get; }
 
-        private JObject? engines;
-
         public static readonly StyledProperty<bool> IsSearchingProperty = AvaloniaProperty.Register<MainWindow, bool>(nameof(IsSearching));
 
         public bool IsSearching
@@ -78,7 +76,7 @@ namespace CGSearchUI
                                 {
                                     Results.Add(new EngineResultLink(
                                         repackData.GetValue("RepackTitle").ToString(),
-                                        engines.GetValue(engineId).ToObject<JObject>().GetValue("name").ToString(),
+                                        IPCHelper.engines.GetValue(engineId).ToObject<JObject>().GetValue("name").ToString(),
                                         repackData.GetValue("LinkName").ToString(),
                                         repackData.GetValue("LinkUrl").ToString(),
                                         repackData.GetValue("LinkType").ToString(),
@@ -90,7 +88,7 @@ namespace CGSearchUI
                             }
                         case "egns":
                             {
-                                engines = JObject.Parse(text ?? "{}");
+                                IPCHelper.engines = JObject.Parse(text ?? "{}");
                                 break;
                             }
                         case "lnfo":
@@ -152,18 +150,29 @@ namespace CGSearchUI
                             { 
                                 Dispatcher.UIThread.InvokeAsync(() =>
                                 {
+                                    var isWarning = result != null;
                                     var popuptext = "Do you want to open this with " + SystemHelpers.GetAssociatedApp((string) value) + "?";
-                                    popuptext = (result != null) ? result + "\n\n" + popuptext : popuptext;
+                                    popuptext = isWarning ? result + "\n\n" + popuptext : popuptext;
 
-                                    var popup = new PopupWindow(popuptext, "Okay", "Cancel", (popup) =>
+                                    var startFunc = () => {
+                                        Process.Start(new ProcessStartInfo((string)value) { UseShellExecute = true });
+                                    };
+
+                                    if (SharedStuff.askPopup || (SharedStuff.askPopupWarnings && isWarning))
                                     {
-                                        Process.Start(new ProcessStartInfo((string) value) { UseShellExecute = true });
-                                        popup.Close();
-                                    }, (popup) =>
-                                    {
-                                        popup.Close();
-                                    });
-                                    popup.ShowDialog(this);
+                                        var popup = new PopupWindow(popuptext, "Okay", "Cancel", (popup) =>
+                                        {
+                                            startFunc.Invoke();
+                                            popup.Close();
+                                        }, (popup) =>
+                                        {
+                                            popup.Close();
+                                        });
+                                        popup.ShowDialog(this);
+                                    } else
+                                    { 
+                                        startFunc.Invoke(); 
+                                    }
                                 });
                             });
 
@@ -177,7 +186,7 @@ namespace CGSearchUI
                     {
                         string description = "";
                         string homepage = "";
-                        foreach (var engine in engines?.Values())
+                        foreach (var engine in IPCHelper.engines?.Values())
                         {
                             JObject? engObj = engine.ToObject<JObject>();
                             if (engObj.GetValue("name").ToString() == (string?) value)
@@ -193,16 +202,26 @@ namespace CGSearchUI
                         {
                             popup.Close();
 
-                            var popup2 = new PopupWindow("Do you want to open this with " + SystemHelpers.GetAssociatedApp(homepage) + "?", "Okay", "Cancel", (popup2) =>
-                            {
+                            var startFunc = () => {
                                 Process.Start(new ProcessStartInfo(homepage) { UseShellExecute = true });
-                                popup2.Close();
-                            }, (popup2) =>
-                            {
-                                popup2.Close();
+                            };
 
-                            });
-                            popup2.ShowDialog(this);
+                            if (SharedStuff.askPopup)
+                            {
+                                var popup2 = new PopupWindow("Do you want to open this with " + SystemHelpers.GetAssociatedApp(homepage) + "?", "Okay", "Cancel", (popup2) =>
+                                {
+                                    startFunc.Invoke();
+                                    popup2.Close();
+                                }, (popup2) =>
+                                {
+                                    popup2.Close();
+
+                                });
+                                popup2.ShowDialog(this);
+                            } else
+                            {
+                                startFunc.Invoke();
+                            }
 
                         });
                         popup.ShowDialog(this);
@@ -248,7 +267,7 @@ namespace CGSearchUI
         void SettingsClicked(object? sender, RoutedEventArgs e)
         {
             var settings = new SettingsWindow();
-            settings.Show(this);
+            settings.ShowDialog(this);
         }
 
     }

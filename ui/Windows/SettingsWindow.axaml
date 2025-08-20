@@ -21,16 +21,19 @@
 		<TabControl Grid.Row="1" Background="#6f101010">
 			<TabItem Header="General">
 				<Border>
-					<StackPanel>
-						<TextBlock TextWrapping="Wrap">Here you can configure general settings.</TextBlock>
-					</StackPanel>
+					<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+						<StackPanel Margin="10" Orientation="Vertical">
+							<CheckBox IsChecked="{Binding AskPopup, Mode=TwoWay}">Always ask before opening a link</CheckBox>
+							<CheckBox IsChecked="{Binding AskPopupWarnings, Mode=TwoWay}" IsEnabled="False" x:Name="WarningPopupBox">Ask before opening a link if a warning is found</CheckBox>
+						</StackPanel>
+					</ScrollViewer>
 				</Border>
 			</TabItem>
 			<TabItem Header="Engines">
 				<Border>
-					<StackPanel>
-						<TextBlock TextWrapping="Wrap">Here you can configure what engines get included in the search results.</TextBlock>
-					</StackPanel>
+					<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+						<StackPanel Margin="10" Orientation="Vertical" x:Name="AllEnginesContainer" />
+					</ScrollViewer>
 				</Border>
 			</TabItem>
 		</TabControl>
