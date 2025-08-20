@@ -9,6 +9,7 @@ FunctionEnd
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\nsis3-uninstall.ico"
 
 !define name "POWERSHELL_INSERTS_THIS-name"
+!define outfile "POWERSHELL_INSERTS_THIS-outfile"
 !define exename "POWERSHELL_INSERTS_THIS-exename"
 !define version "POWERSHELL_INSERTS_THIS-version"
 !define buildpath "POWERSHELL_INSERTS_THIS-buildpath"
@@ -18,7 +19,7 @@ FunctionEnd
 
 Name ${APP_NAME}
 InstallDir "C:\Program Files\${APP_NAME}"
-OutFile "${APP_NAME} Installer.exe"
+OutFile "${outfile}"
 BrandingText " "
 SetCompressor /SOLID lzma
 
@@ -34,6 +35,9 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
+
+; TODO MUI_PAGE_STARTMENU seems to be a thing? investigate.
+; TODO the size required shown in the installer seems to be oddly doubled. compilation says ~60mb, installer says ~120mb
 
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_DIRECTORY
