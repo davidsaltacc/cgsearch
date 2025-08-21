@@ -71,7 +71,7 @@ if ($buildTarget) {
 
     Copy-Item "runtime" (Join-Path -Path "$buildTarget" -ChildPath "bin/runtime") -Recurse -Force
     Copy-Item "search" (Join-Path -Path "$buildTarget" -ChildPath "search") -Recurse -Force
-    Copy-Item "icon.ico" -Destination "$buildTarget"
+    Copy-Item "icons\icon.ico" -Destination "$buildTarget"
 
 }
 

@@ -5,8 +5,8 @@ FunctionEnd
 
 !include "MUI.nsh"
 
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\nsis3-install-alt.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\nsis3-uninstall.ico"
+!define MUI_ICON "icons\install.ico"
+!define MUI_UNICON "icons\uninstall.ico"
 
 !define name "POWERSHELL_INSERTS_THIS-name"
 !define outfile "POWERSHELL_INSERTS_THIS-outfile"

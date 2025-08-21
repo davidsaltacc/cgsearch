@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-	<ApplicationIcon>../icon.ico</ApplicationIcon>
+	<ApplicationIcon>../icons/icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
