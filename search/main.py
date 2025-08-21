@@ -20,6 +20,7 @@ import engines.unioncrax
 import engines.freegogpcgames
 import engines.fluxyrepacks
 import engines.myabandonware
+import engines.steamgg
 
 if __name__ != "__main__":
     exit(0)
@@ -43,6 +44,7 @@ all_engines = [
     engines.fluxyrepacks,
     engines.appnetica,
     engines.unioncrax,
+    engines.steamgg,
     engines.steamunderground, 
     engines.byxatab,
     engines.releasebb, 
@@ -143,6 +145,5 @@ while True:
 # TODO https://reloadedsteam.com/?s=QUERY
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://atopgames.com/?s=QUERY
-# TODO https://steamgg.net/?s=QUERY&post_type%5B%5D=portfolio&post_type%5B%5D=post&post_type%5B%5D=page
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
