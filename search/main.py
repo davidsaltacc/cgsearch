@@ -1,5 +1,6 @@
 import json
 import sys
+import traceback
 from threading import Thread, Event
 from helpers import read_message, send_message, safe_generator
 
@@ -89,7 +90,7 @@ while True:
                 if engine.engine_meta["id"] in excluded_engines:
                     continue
                 
-                for result in safe_generator(engine.generator(query), lambda e: sys.stderr.write("search engine " + engine.engine_meta["id"] + " failed: \n" + repr(e) + "\n")):
+                for result in safe_generator(engine.generator(query), lambda e: sys.stderr.write("search engine " + engine.engine_meta["id"] + " failed: \n" + "".join(traceback.format_exception(e)) + "\n")):
 
                     if cancel_event.is_set():
                         send_message(b"done", b"")
