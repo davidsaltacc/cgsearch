@@ -38,6 +38,7 @@ def get_links_steamrip(name):
                 "LinkName": parent_text,
                 "LinkUrl": absolutify_url(button.get("href", ""), newUrl),
                 "LinkType": "Torrent" if "torrent" in button.decode_contents().lower() else "Direct",
+                "RepackPage": newUrl,
                 "Score": score
             }
 

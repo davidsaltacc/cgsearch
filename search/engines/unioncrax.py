@@ -6,9 +6,9 @@ def get_links_unioncrax(name):
     
     data = json.loads(requests.get("https://be-antwerp-po-db.pages.dev/db.json").text)
     
-    name_link = [ (game["name"] + " (" + game["version"] + ")", game["link"], game["size"]) for game in data ] # i know that f-strings are a thing, thank you. 
+    name_link_size_id = [ (game["name"] + " (" + game["version"] + ")", game["link"], game["size"], game["appid"]) for game in data ] 
     
-    name_link_filtered = filter_matches(name, name_link, itemname_function = lambda x: x[0], min_score = 0.85)
+    name_link_filtered = filter_matches(name, name_link_size_id, itemname_function = lambda x: x[0], min_score = 0.85)
 
     for pair_ in name_link_filtered:
         pair = pair_[0]
@@ -17,6 +17,7 @@ def get_links_unioncrax(name):
             "LinkName": "Download (" + pair[2] + ")", # doesn't have a link name, so why not just put the file size in 
             "LinkUrl": pair[1],
             "LinkType": "Direct",
+            "RepackPage": "https://union-crax.xyz/game/" + pair[3],
             "Score": pair_[1]
         }
 

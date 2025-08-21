@@ -54,6 +54,7 @@ def get_links_appnetica(name):
             "LinkName": link_name,
             "LinkUrl": download_url,
             "LinkType": link_type,
+            "RepackPage": new_url,
             "Score": score
         }
 

@@ -31,6 +31,7 @@ def get_links_byxatab(name):
             "LinkName": "DOWNLOAD TORRENT", # originally says "СКАЧАТЬ ТОРРЕНТ". parsing it is a pain though (it strips the spaces, and if you tell it not to it includes unnecessary characters at the end, including a \xa0), and it doesn't change for any game afaik, so we just hardcode the translation
             "LinkUrl": soup.select_one("#download a.download-torrent")["href"],
             "LinkType": "Torrent",
+            "RepackPage": newUrl,
             "Score": score
         }
 

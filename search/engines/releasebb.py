@@ -36,6 +36,7 @@ def get_links_releasebb(name):
                 "LinkName": a.getText(strip = True),
                 "LinkUrl": a["href"],
                 "LinkType": "Direct",
+                "RepackPage": post.select_one("h1.entry-title a")["href"],
                 "Score": score
             }
 

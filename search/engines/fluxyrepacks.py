@@ -37,6 +37,7 @@ def get_links_gload(name):
                 "LinkName": a.get_text(strip = True) + ((" (" + version + ")") if version else ""), # some titles don't include the version, so we add it in the link name to be sure
                 "LinkUrl": a["href"],
                 "LinkType": "Direct",
+                "RepackPage": newUrl,
                 "Score": score
             }
 

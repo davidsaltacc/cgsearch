@@ -51,6 +51,7 @@ def get_links_elamigos(name):
                     "LinkName": h2.get_text(strip = True),
                     "LinkUrl": href,
                     "LinkType": "Direct", # elamigos does not provide torrents, as far as i am aware
+                    "RepackPage": newUrl,
                     "Score": score
                 }
 

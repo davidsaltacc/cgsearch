@@ -33,6 +33,7 @@ def get_links_freegogpcgames(name):
                 "LinkName": a.get_text(strip = True),
                 "LinkUrl": base64.b64decode(urllib.parse.parse_qs(urllib.parse.urlparse(a["href"]).query)["url"][0]).decode(), 
                 "LinkType": "Torrent", # only torrents
+                "RepackPage": newUrl,
                 "Score": score
             }
 

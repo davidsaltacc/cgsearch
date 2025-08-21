@@ -57,6 +57,7 @@ def get_links_rexagames(name):
             "LinkName": "Download this file", # hardcode title to save effort
             "LinkUrl": link,
             "LinkType": "Direct",
+            "RepackPage": url,
             "Score": score
         }
 

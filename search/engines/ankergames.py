@@ -43,6 +43,7 @@ def get_links_ankergames(name):
             "LinkName": "Download",
             "LinkUrl": newUrl,
             "LinkType": "Direct", # they host it directly on their website 
+            "RepackPage": newUrl,
             "Score": score
         }
 

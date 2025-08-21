@@ -56,11 +56,32 @@
 					<DataGridTemplateColumn Header="Link URL" Width="200" CanUserSort="true" SortMemberPath="LinkUrl">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate DataType="local:EngineResultLink">
-								<TextBlock Text="{Binding LinkUrl}" VerticalAlignment="Center" PointerPressed="LinkCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand" />
+								<TextBlock Text="{Binding LinkUrl}" VerticalAlignment="Center" PointerPressed="LinkCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand">
+									<TextBlock.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Open" />
+											<MenuItem Header="Copy" />
+										</ContextMenu>
+									</TextBlock.ContextMenu>
+								</TextBlock>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
 					<DataGridTextColumn Header="Type" Binding="{Binding LinkType}"/>
+					<DataGridTemplateColumn Header="Repack Page" Width="200" CanUserSort="true" SortMemberPath="RepackPage">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate DataType="local:EngineResultLink">
+								<TextBlock Text="{Binding RepackPage}" VerticalAlignment="Center" PointerPressed="RepackPageCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand">
+									<TextBlock.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Open" />
+											<MenuItem Header="Copy" />
+										</ContextMenu>
+									</TextBlock.ContextMenu>
+								</TextBlock>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
 					<DataGridTextColumn Header="Result Confidence" Binding="{Binding Score}"/>
 				</DataGrid.Columns>
 

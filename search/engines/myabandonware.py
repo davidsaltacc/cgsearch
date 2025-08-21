@@ -32,6 +32,7 @@ def get_links_myabandonware(name):
                 "LinkName": "Download from MyAbandonware",
                 "LinkUrl": newUrl + "#download", # several links sometimes, just link the user to the page so they can get what they want
                 "LinkType": "Direct",
+                "RepackPage": newUrl,
                 "Score": score
             }
 

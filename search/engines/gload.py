@@ -33,6 +33,7 @@ def get_links_gload(name):
                 "LinkName": a.select_one("span").get_text(strip = True),
                 "LinkUrl": a["href"],
                 "LinkType": "Direct",
+                "RepackPage": newUrl,
                 "Score": score
             }
 

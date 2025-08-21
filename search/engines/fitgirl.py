@@ -64,6 +64,7 @@ def get_links_fitgirl(name):
                         "LinkName": a.get_text(strip = True),
                         "LinkUrl": absolutify_url(href, newUrl),
                         "LinkType": ltype,
+                        "RepackPage": newUrl,
                         "Score": score
                     }
 

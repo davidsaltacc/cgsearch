@@ -32,6 +32,7 @@ def get_links_steamunderground(name):
                 "LinkName": a.get_text(strip = True),
                 "LinkUrl": a["href"],
                 "LinkType": "Direct", # only direct downloads
+                "RepackPage": pair[1],
                 "Score": score
             }
 

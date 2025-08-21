@@ -33,6 +33,7 @@ def get_links_steamrip(name):
                 "LinkName": a.get_text(strip = True),
                 "LinkUrl": absolutify_url(a["href"], newUrl),
                 "LinkType": "Direct",
+                "RepackPage": newUrl,
                 "Score": score
             }
 

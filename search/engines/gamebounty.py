@@ -45,6 +45,7 @@ def get_links_gamebounty(name):
                     "LinkName": mirror["name"],
                     "LinkUrl": mirror["links"][0]["url"],
                     "LinkType": "Direct",
+                    "RepackPage": link,
                     "Score": score
                 }
             else:
@@ -56,6 +57,7 @@ def get_links_gamebounty(name):
                 "LinkName": "Download Game (multiple hosts)", # originally just says "Download Game"
                 "LinkUrl": link,
                 "LinkType": "Direct",
+                "RepackPage": link,
                 "Score": score
             }
 
