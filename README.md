@@ -24,7 +24,7 @@ For Debugging your engine - you will have to add it to the list of all engines i
 
 ## Further Contributions
 
-If you want to make modifications to the UI or other parts that don't only touch the search engines, you will have to clone the repository as described in the previous step. A few things are required for that: 1. A Visual Studio 2022 installation with Avalonia support, NSIS installed and in PATH, and have a Folder Publishing Profile set up - standard release builds are not enough if you want an installer and a distributable version to be generated.
+If you want to make modifications to the UI or other parts that don't only touch the search engines, you will have to clone the repository as described in the previous step. A few things are required for that: 1. A Visual Studio 2022 installation with Avalonia support, NSIS installed and in PATH, Optionally ImageMagick and in PATH (only used for creating a better quality .ico file, but is not needed), and have a Folder Publishing Profile set up - standard release builds are not enough if you want an installer and a distributable version to be generated.
 
 For simple UI testing builds, you may use VS's "Release"/"Debug" builds - but, as mentioned above, when in need of a fully distributable version, do not use builds produced by VS's "Release" build - specifically use the publishing profile.
 
