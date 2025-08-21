@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace CGSearchUI
@@ -28,7 +30,18 @@ namespace CGSearchUI
                 CreateNoWindow = true
             };
 
-            var process = Process.Start(psi);
+            Process process;
+
+            try
+            {
+                process = Process.Start(psi);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox(IntPtr.Zero, "Failed to launch search engine backend. Please re-install CGSearch", "Error starting python", 0);
+                Environment.Exit(-1);
+                return null;
+            }
 
             process.ErrorDataReceived += (sender, e) =>
             {
@@ -93,6 +106,9 @@ namespace CGSearchUI
             Array.Copy(buffer, 4, data, 0, buffer.Length - 4);
             return new Tuple<byte[]?, byte[]?>(type, data);
         }
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
 
     }
 }

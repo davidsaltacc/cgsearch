@@ -16,6 +16,22 @@ public partial class PopupWindow : Window
     private readonly Action<PopupWindow> Button1Handler;
     private readonly Action<PopupWindow> Button2Handler;
 
+    public PopupWindow()
+    {
+
+        TextContent = "Text Text Text";
+        Button1Content = "Button 1";
+        Button2Content = "Button 2";
+        Button1Handler = _ => { };
+        Button2Handler = _ => { };
+
+        InitializeComponent();
+
+        DataContext = this;
+        TitleBarIcon.Source = new Bitmap(Path.Combine(AppContext.BaseDirectory, "icon.ico"));
+
+    }
+
     public PopupWindow(string textContent, string button1Content, string button2Content, Action<PopupWindow> button1Handler, Action<PopupWindow> button2Handler)
     {
 

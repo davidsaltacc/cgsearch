@@ -46,6 +46,11 @@ namespace CGSearchUI
 
             Dispatcher.UIThread.InvokeAsync(() => ResultsDataGrid.Columns.Last().Sort(ListSortDirection.Descending));
 
+            if (Design.IsDesignMode)
+            {
+                return;
+            }
+
             IPCHelper.StartPython();
 
             Task IPCTask = new(() => 
@@ -80,6 +85,7 @@ namespace CGSearchUI
                                         repackData.GetValue("LinkName").ToString(),
                                         repackData.GetValue("LinkUrl").ToString(),
                                         repackData.GetValue("LinkType").ToString(),
+                                        repackData.GetValue("RepackPage").ToString(),
                                         float.Parse(repackData.GetValue("Score").ToString())
                                     ));
                                 });
@@ -154,15 +160,16 @@ namespace CGSearchUI
                                     var popuptext = "Do you want to open this with " + SystemHelpers.GetAssociatedApp((string) value) + "?";
                                     popuptext = isWarning ? result + "\n\n" + popuptext : popuptext;
 
-                                    var startFunc = () => {
+                                    void startFunc()
+                                    {
                                         Process.Start(new ProcessStartInfo((string)value) { UseShellExecute = true });
-                                    };
+                                    }
 
                                     if (SharedStuff.askPopup || (SharedStuff.askPopupWarnings && isWarning))
                                     {
                                         var popup = new PopupWindow(popuptext, "Okay", "Cancel", (popup) =>
                                         {
-                                            startFunc.Invoke();
+                                            startFunc();
                                             popup.Close();
                                         }, (popup) =>
                                         {
@@ -171,7 +178,7 @@ namespace CGSearchUI
                                         popup.ShowDialog(this);
                                     } else
                                     { 
-                                        startFunc.Invoke(); 
+                                        startFunc(); 
                                     }
                                 });
                             });
@@ -202,15 +209,16 @@ namespace CGSearchUI
                         {
                             popup.Close();
 
-                            var startFunc = () => {
+                            void startFunc()
+                            {
                                 Process.Start(new ProcessStartInfo(homepage) { UseShellExecute = true });
-                            };
+                            }
 
                             if (SharedStuff.askPopup)
                             {
                                 var popup2 = new PopupWindow("Do you want to open this with " + SystemHelpers.GetAssociatedApp(homepage) + "?", "Okay", "Cancel", (popup2) =>
                                 {
-                                    startFunc.Invoke();
+                                    startFunc();
                                     popup2.Close();
                                 }, (popup2) =>
                                 {
@@ -220,11 +228,37 @@ namespace CGSearchUI
                                 popup2.ShowDialog(this);
                             } else
                             {
-                                startFunc.Invoke();
+                                startFunc();
                             }
 
                         });
                         popup.ShowDialog(this);
+                        break;
+                    }
+                case "RepackPage":
+                    {
+                        void startFunc()
+                        {
+                            Process.Start(new ProcessStartInfo((string)(value ?? "")) { UseShellExecute = true });
+                        }
+
+                        if (SharedStuff.askPopup)
+                        {
+                            var popup = new PopupWindow("Do you want to open this with " + SystemHelpers.GetAssociatedApp((string) (value ?? "")) + "?", "Okay", "Cancel", (popup) =>
+                            {
+                                startFunc();
+                                popup.Close();
+                            }, (popup) =>
+                            {
+                                popup.Close();
+
+                            });
+                            popup.ShowDialog(this);
+                        }
+                        else
+                        {
+                            startFunc();
+                        }
                         break;
                     }
                 default: break;
@@ -232,6 +266,10 @@ namespace CGSearchUI
         }
 
         private void LinkCell_PointerPressed(object? sender, PointerPressedEventArgs e) {
+            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+            {
+                return;
+            }
             EngineResultLink? fullResult = null;
             foreach (var res in Results)
             {
@@ -246,9 +284,22 @@ namespace CGSearchUI
             }
         }
 
+        private void RepackPageCell_PointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+            { 
+                return;
+            }
+            ClickedCell("RepackPage", ((TextBlock?) sender).Text, null);
+            // fullResult can be null, only needed when a link LinkUrl cell is clicked
+        }
+
         private void ProviderCell_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
-
+            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+            {
+                return;
+            }
             ClickedCell("Provider", ((TextBlock?) sender).Text, null); 
             // fullResult can be null, only needed when a link LinkUrl cell is clicked
         }
