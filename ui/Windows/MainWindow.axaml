@@ -59,8 +59,8 @@
 								<TextBlock Text="{Binding LinkUrl}" VerticalAlignment="Center" PointerPressed="LinkCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand">
 									<TextBlock.ContextMenu>
 										<ContextMenu>
-											<MenuItem Header="Open" />
-											<MenuItem Header="Copy" />
+											<MenuItem Header="Open" Click="LinkUrlContextMenu_Open_Clicked" />
+											<MenuItem Header="Copy" Click="LinkUrlContextMenu_Copy_Clicked" />
 										</ContextMenu>
 									</TextBlock.ContextMenu>
 								</TextBlock>
@@ -74,8 +74,8 @@
 								<TextBlock Text="{Binding RepackPage}" VerticalAlignment="Center" PointerPressed="RepackPageCell_PointerPressed" TextDecorations="Underline" Foreground="#cfcfff" Background="Transparent" Cursor="Hand">
 									<TextBlock.ContextMenu>
 										<ContextMenu>
-											<MenuItem Header="Open" />
-											<MenuItem Header="Copy" />
+											<MenuItem Header="Open" Click="RepackPageContextMenu_Open_Clicked" />
+											<MenuItem Header="Copy" Click="RepackPageContextMenu_Copy_Clicked" />
 										</ContextMenu>
 									</TextBlock.ContextMenu>
 								</TextBlock>

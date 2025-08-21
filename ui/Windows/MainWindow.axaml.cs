@@ -2,8 +2,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -265,8 +267,8 @@ namespace CGSearchUI
             }
         }
 
-        private void LinkCell_PointerPressed(object? sender, PointerPressedEventArgs e) {
-            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+        private void LinkCell_PointerPressed(object? sender, PointerPressedEventArgs? e) {
+            if (e != null && !e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
             {
                 return;
             }
@@ -284,9 +286,9 @@ namespace CGSearchUI
             }
         }
 
-        private void RepackPageCell_PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void RepackPageCell_PointerPressed(object? sender, PointerPressedEventArgs? e)
         {
-            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+            if (e != null && !e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
             { 
                 return;
             }
@@ -296,12 +298,47 @@ namespace CGSearchUI
 
         private void ProviderCell_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
-            if (!e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
+            if (e != null && !e.GetCurrentPoint((TextBlock?) sender).Properties.IsLeftButtonPressed)
             {
                 return;
             }
             ClickedCell("Provider", ((TextBlock?) sender).Text, null); 
             // fullResult can be null, only needed when a link LinkUrl cell is clicked
+        }
+
+        private void LinkUrlContextMenu_Open_Clicked(object? sender, RoutedEventArgs e) 
+        {
+            TextBlock? cell = ((MenuItem?) sender).FindLogicalAncestorOfType<TextBlock>();
+            if (cell != null) {
+                LinkCell_PointerPressed(cell, null);
+            }
+        }
+
+        private void LinkUrlContextMenu_Copy_Clicked(object? sender, RoutedEventArgs e)
+        {
+            TextBlock? cell = ((MenuItem?) sender).FindLogicalAncestorOfType<TextBlock>();
+            if (cell != null)
+            {
+                Clipboard.SetTextAsync(cell.Text);
+            }
+        }
+
+        private void RepackPageContextMenu_Open_Clicked(object? sender, RoutedEventArgs e)
+        {
+            TextBlock? cell = ((MenuItem?) sender).FindLogicalAncestorOfType<TextBlock>();
+            if (cell != null)
+            {
+                RepackPageCell_PointerPressed(cell, null);
+            }
+        }
+
+        private void RepackPageContextMenu_Copy_Clicked(object? sender, RoutedEventArgs e)
+        {
+            TextBlock? cell = ((MenuItem?) sender).FindLogicalAncestorOfType<TextBlock>();
+            if (cell != null)
+            {
+                Clipboard.SetTextAsync(cell.Text);
+            }
         }
 
         void SearchClicked(object? sender, RoutedEventArgs e) 
