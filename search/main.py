@@ -1,5 +1,6 @@
 import json
 import sys
+import ctypes
 import traceback
 from threading import Thread, Event
 from helpers import read_message, send_message, safe_generator
@@ -70,7 +71,6 @@ if sys.argv[1] == "Debug":
 excluded_engines = []
 
 search_thread = None
-cancel = None
 
 while True:
     msg = read_message()
@@ -82,7 +82,7 @@ while True:
 
     if msg_type == b"srch": # start search
 
-        def start_search(cancel_event):
+        def start_search():
             query = msg_data.decode()
             send_message(b"rset", b"")
 
@@ -91,10 +91,6 @@ while True:
                     continue
                 
                 for result in safe_generator(engine.generator(query), lambda e: sys.stderr.write("search engine " + engine.engine_meta["id"] + " failed: \n" + "".join(traceback.format_exception(e)) + "\n")):
-
-                    if cancel_event.is_set():
-                        send_message(b"done", b"")
-                        return
 
                     if (len(result["LinkUrl"].strip()) == 0):
                         continue
@@ -106,12 +102,15 @@ while True:
             
             send_message(b"done", b"")
         
-        cancel = Event()
-        search_thread = Thread(target = start_search, args = (cancel,))
+        search_thread = Thread(target = start_search)
         search_thread.start()
     
     if msg_type == b"cncl": # cancel
-        cancel.set()
+        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(search_thread.ident), ctypes.py_object(SystemExit))
+        send_message(b"done", b"")
+        # KILL IT WITH FIRE!!!!
+        # sorry, writing this whole cgsearch thing is making me go insane
+        # on a serious note, i don't think there is any drawbacks to just killing it 
 
     if msg_type == b"egns": # list engines
         data = {}
@@ -137,6 +136,8 @@ while True:
         if action == "include" and engine_id in excluded_engines:
             excluded_engines.remove(engine_id)
 
+# TODO when writing error to stderr, also first write 4 bytes of length - kinda like the ipc works. that way the full error can be printed in C#
+
 # TODO https://romheaven.com/csf maybe - add "uncracked" to names, otherwise people may end up confused
 # TODO https://gamepcfull.com/?s=QUERY
 # TODO https://www.cg-gamespc.com/games?game=QUERY
@@ -146,5 +147,5 @@ while True:
 # TODO https://reloadedsteam.com/?s=QUERY
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://atopgames.com/?s=QUERY
-# TODO https://www.old-games.ru/ maybe?
+9# TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
