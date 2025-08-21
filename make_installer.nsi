@@ -37,7 +37,6 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_FINISH
 
 ; TODO MUI_PAGE_STARTMENU seems to be a thing? investigate.
-; TODO the size required shown in the installer seems to be oddly doubled. compilation says ~60mb, installer says ~120mb
 
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_DIRECTORY
@@ -58,24 +57,11 @@ WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NA
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "UninstallString" "$INSTDIR\unins.exe"
 ;TODO WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "EstimatedSize" ${INSTALLSIZE}
 
-
-SetOutPath "$INSTDIR\bin\runtime"
-File /r "runtime\*"
-
-SetOutPath "$INSTDIR\search"
-File /r "search\*"
-
 SetOutPath "$INSTDIR"
 File "LICENSE"
 WriteUninstaller "unins.exe"
 
 File /r "${buildpath}\*"
-; all files such as icons get copied over to buildpath with powershell, so they get included here - the ones that it copies over in subfolders, such as "bin/runtime" - don't get copied over, we need to do that manually as above here
-
-SetOutPath "$INSTDIR\bin\dlls"
-File /r "${buildpath}\bin\dlls\*"
-
-SetOutPath "$INSTDIR"
 
 SectionEnd
 
