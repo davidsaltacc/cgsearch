@@ -27,7 +27,12 @@ SetCompressor /SOLID lzma
 !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\nsis3-metro.bmp"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\nsis3-metro.bmp"
 
-!define MUI_INSTFILESPAGE_NOAUTOCLOSE
+!define MUI_FINISHPAGE_NOAUTOCLOSE
+!define MUI_UNFINISHPAGE_NOAUTOCLOSE
+
+!define MUI_INSTFILESPAGE_FINISHHEADER_TEXT "Finished Installation."
+
+!define MUI_FINISHPAGE_RUN ${MAIN_EXE}
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "LICENSE"
@@ -35,8 +40,6 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
-
-; TODO MUI_PAGE_STARTMENU seems to be a thing? investigate.
 
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_DIRECTORY
