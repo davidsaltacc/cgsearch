@@ -3,7 +3,7 @@ from helpers import absolutify_url, filter_matches
 import urllib.parse
 import requests
 
-def get_links_steamrip(name):
+def get_links_steamgg(name):
     
     data = requests.get("https://steamgg.net/?post_type%5B%5D=portfolio&post_type%5B%5D=post&post_type%5B%5D=page&s=" + urllib.parse.quote_plus(name)).text
     
@@ -37,7 +37,7 @@ def get_links_steamrip(name):
                 "Score": score
             }
 
-generator = get_links_steamrip
+generator = get_links_steamgg
 engine_meta = {
     "id": "steamgg",
     "name": "SteamGG",
