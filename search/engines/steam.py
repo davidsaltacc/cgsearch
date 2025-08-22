@@ -29,7 +29,7 @@ def get_links_steam(name):
             "LinkUrl": newUrl,
             "LinkType": "Official",
             "RepackPage": newUrl,
-            "Score": score * 1.2 # boost official links above pirated ones 
+            "Score": score 
         }
 
 
@@ -38,5 +38,5 @@ engine_meta = {
     "id": "steam",
     "name": "Steam",
     "homepage": "https://store.steampowered.com/",
-    "description": "Steam is probably the biggest game distribution website where you can buy and get most games."
+    "description": "Steam is the biggest game distribution website where you can buy and get most games."
 }

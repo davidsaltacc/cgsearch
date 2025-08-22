@@ -75,6 +75,8 @@ if sys.argv[1] == "Debug":
     
     exit(0)
 
+boost_official_links = True # TODO make configurable
+
 excluded_engines = []
 
 search_thread = None
@@ -109,6 +111,9 @@ try:
 
                         if (len(result["LinkUrl"].strip()) == 0):
                             continue
+                            
+                        if (result["LinkType"] == "Official") and boost_official_links:
+                            result["Score"] *= 1.2
 
                         send_message(b"link", json.dumps({ 
                             "engine_id": engine.engine_meta["id"],

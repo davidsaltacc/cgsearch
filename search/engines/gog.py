@@ -27,7 +27,7 @@ def get_links_steam(name):
             "LinkUrl": newUrl,
             "LinkType": "Official",
             "RepackPage": newUrl,
-            "Score": score * 1.2 # boost official links above pirated ones 
+            "Score": score
         }
 
 
