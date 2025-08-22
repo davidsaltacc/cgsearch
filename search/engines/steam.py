@@ -21,13 +21,13 @@ def get_links_steam(name):
         pair = pair_[0]
         score = pair_[1]
         
-        newUrl = absolutify_url(pair[1], "https://store.steampowered.com/search/")
+        newUrl = absolutify_url(pair[1], "https://store.steampowered.com/search/").split("?")[0]
         
         yield {
             "RepackTitle": pair[0],
             "LinkName": "Get on Steam",
             "LinkUrl": newUrl,
-            "LinkType": "Direct",
+            "LinkType": "Official",
             "RepackPage": newUrl,
             "Score": score * 1.2 # boost official links above pirated ones 
         }
