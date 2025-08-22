@@ -91,6 +91,7 @@ if ($isPublish) {
     (Get-Content "make_installer_temp.nsi") -replace "POWERSHELL_INSERTS_THIS-version", "$version" | Set-Content "make_installer_temp.nsi"
     (Get-Content "make_installer_temp.nsi") -replace "POWERSHELL_INSERTS_THIS-buildpath", "$buildpath" | Set-Content "make_installer_temp.nsi"
     (Get-Content "make_installer_temp.nsi") -replace "POWERSHELL_INSERTS_THIS-outfile", "$name Installer.exe" | Set-Content "make_installer_temp.nsi"
+    (Get-Content "make_installer_temp.nsi") -replace "POWERSHELL_INSERTS_THIS-appsize", [Math]::Round((Get-ChildItem -Path "$buildpath" -File -Recurse | Measure-Object -Property Length -Sum).Sum / 1KB) | Set-Content "make_installer_temp.nsi"
     (Get-Content "make_installer_temp.nsi") -replace "Quit ;REMOVED_BY_POWERSHELL", "" | Set-Content "make_installer_temp.nsi"
     Invoke-Expression "makensis make_installer_temp.nsi"
     Remove-Item "make_installer_temp.nsi"

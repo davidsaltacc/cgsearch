@@ -13,6 +13,7 @@ FunctionEnd
 !define exename "POWERSHELL_INSERTS_THIS-exename"
 !define version "POWERSHELL_INSERTS_THIS-version"
 !define buildpath "POWERSHELL_INSERTS_THIS-buildpath"
+!define appsize "POWERSHELL_INSERTS_THIS-appsize"
 
 !define APP_NAME ${name}
 !define MAIN_EXE "${exename}.exe"
@@ -29,8 +30,6 @@ SetCompressor /SOLID lzma
 
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
-
-!define MUI_INSTFILESPAGE_FINISHHEADER_TEXT "Finished Installation."
 
 !define MUI_FINISHPAGE_RUN ${MAIN_EXE}
 
@@ -58,7 +57,7 @@ WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME
 WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoModify" 1
 WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "NoRepair" 1
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "UninstallString" "$INSTDIR\unins.exe"
-;TODO WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "EstimatedSize" ${INSTALLSIZE}
+WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "EstimatedSize" ${appsize}
 
 SetOutPath "$INSTDIR"
 File "LICENSE"
