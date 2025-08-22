@@ -26,6 +26,7 @@
 							<CheckBox IsChecked="{Binding AskPopup, Mode=TwoWay}">Always ask before opening a link</CheckBox>
 							<CheckBox IsChecked="{Binding AskPopupWarnings, Mode=TwoWay}" IsEnabled="False" x:Name="WarningPopupBox">Ask before opening a link if a warning is found</CheckBox>
 							<CheckBox IsChecked="{Binding BoostOfficialLinks, Mode=TwoWay}">Order official links over others</CheckBox>
+							<CheckBox IsChecked="{Binding LowerBadFilehosts, Mode=TwoWay}">Order not recommended filehosts lower</CheckBox>
 						</StackPanel>
 					</ScrollViewer>
 				</Border>

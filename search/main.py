@@ -79,13 +79,11 @@ if sys.argv[1] == "Debug":
     exit(0)
 
 boost_official_links = True 
-lower_bad_filehosts = True # TODO make configurable
+lower_bad_filehosts = True
 
 excluded_engines = []
 
 search_thread = None
-
-import sys, gc
 
 try:
     while True:
@@ -161,6 +159,9 @@ try:
 
         if msg_type == b"bsof": # boost official links above others
             boost_official_links = msg_data.decode() == "true"
+        
+        if msg_type == b"lbfh": # lower bad file hosts
+            lower_bad_filehosts = msg_data.decode() == "true"
         
         if msg_type == b"lnfo": # get potential warnings about link
             data = {

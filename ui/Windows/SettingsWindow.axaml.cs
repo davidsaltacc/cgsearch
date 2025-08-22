@@ -41,6 +41,18 @@ public partial class SettingsWindow : Window
             SharedStuff.boostOfficialLinks = value;
         }
     }
+    public bool LowerBadFilehosts
+    {
+        get
+        {
+            return SharedStuff.lowerBadFilehosts;
+        }
+        set
+        {
+            IPCHelper.SendMessage("lbfh", value ? "true" : "false");
+            SharedStuff.lowerBadFilehosts = value;
+        }
+    }
 
     public SettingsWindow()
     {
