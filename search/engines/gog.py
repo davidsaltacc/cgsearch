@@ -3,7 +3,7 @@ import urllib.parse
 import requests
 import json
 
-def get_links_steam(name):
+def get_links_gog(name):
     
     data = json.loads(requests.get("https://catalog.gog.com/v1/catalog?order=desc:score&productType=in:game&locale=en-US&query=like:" + urllib.parse.quote_plus(name)).text)
     
@@ -31,7 +31,7 @@ def get_links_steam(name):
         }
 
 
-generator = get_links_steam
+generator = get_links_gog
 engine_meta = {
     "id": "gog",
     "name": "GOG",
