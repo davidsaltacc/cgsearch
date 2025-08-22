@@ -32,6 +32,7 @@ import engines.gog
 import engines.triahgames
 import engines.reloadedsteam
 import engines.romheaven_csf
+import engines.elenemigos
 
 # once silksong releases, ill download it with this tool, lock myself up for a week and just play silksong
 
@@ -65,6 +66,7 @@ all_engines = [
     engines.triahgames, 
     engines.byxatab,
     engines.atopgames,
+    engines.elenemigos,
     engines.releasebb, 
     engines.elamigos,
     engines.myabandonware,
@@ -198,7 +200,5 @@ except Exception as e:
 # TODO https://www.cg-gamespc.com/games?game=QUERY
 # TODO https://worldofpcgames.com/?s=QUERY
 # TODO https://getfreegames.net/?s=QUERY
-# TODO https://reloadedsteam.com/?s=QUERY
-# TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
