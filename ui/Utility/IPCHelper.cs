@@ -2,8 +2,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CGSearchUI
 {
@@ -37,20 +39,29 @@ namespace CGSearchUI
             }
             catch (Exception ex) 
             {
-                _ = MessageBox(IntPtr.Zero, "Failed to launch search engine backend. Please re-install CGSearch.\n\nError: " + ex, "Error starting python", 0);
+                MessageBox("Failed to launch search engine backend. Please re-install CGSearch to try and fix this issue.\n\nError: " + ex, "Error starting python", "Error");
                 Environment.Exit(-1);
                 return null;
             }
 
-            process.ErrorDataReceived += (sender, e) =>
+            Task errorTask = new(() =>
             {
-                if (e.Data == null)
+                var pyStderr = process.StandardError.BaseStream;
+                while (true) 
                 {
-                    return;
+                    var lenBytes = new BinaryReader(pyStderr).ReadBytes(4);
+                    int length = System.Net.IPAddress.NetworkToHostOrder(BitConverter.ToInt32(lenBytes, 0));
+                    var buffer = new BinaryReader(pyStderr).ReadBytes(length);
+                    var data = Encoding.UTF8.GetString(buffer);
+                    Debug.WriteLine("[PYTHON STDERR] " + data);
+                    MessageBox("Error in search backend occured. \n\n" + data, "Error in python backend", "Error");
+                    if (data.Contains("critical"))
+                    {
+                        Environment.Exit(-1);
+                    }
                 }
-                Debug.WriteLine("[PYTHON STDERR] " + e.Data);
-            };
-            process.BeginErrorReadLine();
+            });
+            errorTask.Start();
 
             PyStdin = process.StandardInput.BaseStream; 
             PyStdout = process.StandardOutput.BaseStream;
@@ -60,6 +71,10 @@ namespace CGSearchUI
 
         public static void SendMessage(byte[] type, byte[] data)
         {
+            if (PyStdin == null)
+            {
+                return;
+            }
             if (type.Length != 4)
             {
                 throw new ArgumentException("type must be 4 bytes");
@@ -78,23 +93,13 @@ namespace CGSearchUI
 
         public static Tuple<byte[]?, byte[]?> ReadMessage()
         {
-            var lenBytes = new byte[4];
-            if (PyStdout.Read(lenBytes, 0, 4) != 4)
+            if (PyStdout == null)
             {
                 return new Tuple<byte[]?, byte[]?>([], []);
             }
+            var lenBytes = new BinaryReader(PyStdout).ReadBytes(4);
             int length = System.Net.IPAddress.NetworkToHostOrder(BitConverter.ToInt32(lenBytes, 0));
-            var buffer = new byte[length];
-            int read = 0;
-            while (read < length)
-            {
-                int r = PyStdout.Read(buffer, read, length - read);
-                if (r <= 0)
-                {
-                    return new Tuple<byte[]?, byte[]?>([], []);
-                }
-                read += r;
-            }
+            var buffer = new BinaryReader(PyStdout).ReadBytes(length);
             byte[] type = new byte[4];
             byte[] data = new byte[buffer.Length - 4];
             Array.Copy(buffer, 0, type, 0, 4); 
@@ -102,8 +107,32 @@ namespace CGSearchUI
             return new Tuple<byte[]?, byte[]?>(type, data);
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
+        static void MessageBox(String text, String title, String type)
+        {
+            var command = $@"
+Add-Type -AssemblyName PresentationFramework;
+[System.Windows.MessageBox]::Show(@'
+{text}
+'@, '{title}', 'OK', '{type}')
+";
+            var proc = Process.Start(new ProcessStartInfo
+            {
+                FileName = "powershell.exe",
+                Arguments = $"-NoProfile -EncodedCommand \"{Convert.ToBase64String(Encoding.Unicode.GetBytes(command))}\"",
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            });
+            string output = proc.StandardOutput.ReadToEnd();
+            string error = proc.StandardError.ReadToEnd();
+            proc.WaitForExit();
+
+            Debug.WriteLine("=== STDOUT ===");
+            Debug.WriteLine(output);
+            Debug.WriteLine("=== STDERR ===");
+            Debug.WriteLine(error);
+        }
 
     }
 }
