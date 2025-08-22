@@ -24,6 +24,7 @@ import engines.freegogpcgames
 import engines.fluxyrepacks
 import engines.myabandonware
 import engines.steamgg
+import engines.atopgames
 
 if __name__ != "__main__":
     exit(0)
@@ -50,6 +51,7 @@ all_engines = [
     engines.steamgg,
     engines.steamunderground, 
     engines.byxatab,
+    engines.atopgames,
     engines.releasebb, 
     engines.elamigos,
     engines.myabandonware
@@ -158,6 +160,5 @@ except Exception as e:
 # TODO https://triahgames.com/?s=QUERY
 # TODO https://reloadedsteam.com/?s=QUERY
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
-# TODO https://atopgames.com/?s=QUERY
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
