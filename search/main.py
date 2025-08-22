@@ -29,6 +29,9 @@ import engines.atopgames
 import engines.steam
 import engines.gog
 import engines.triahgames
+import engines.reloadedsteam
+
+# once silksong releases, ill download it with this tool, lock myself up for a week and just play silksong
 
 if __name__ != "__main__":
     exit(0)
@@ -61,7 +64,8 @@ all_engines = [
     engines.atopgames,
     engines.releasebb, 
     engines.elamigos,
-    engines.myabandonware
+    engines.myabandonware,
+    engines.reloadedsteam
 ]
 
 if sys.argv[1] == "Debug":
