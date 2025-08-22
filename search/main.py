@@ -4,6 +4,7 @@ import struct
 import ctypes
 import traceback
 from threading import Thread
+import engines.triahgames
 from helpers import read_message, send_message, safe_generator
 
 import filehosts
@@ -27,6 +28,7 @@ import engines.steamgg
 import engines.atopgames
 import engines.steam
 import engines.gog
+import engines.triahgames
 
 if __name__ != "__main__":
     exit(0)
@@ -54,6 +56,7 @@ all_engines = [
     engines.unioncrax,
     engines.steamgg,
     engines.steamunderground, 
+    engines.triahgames, 
     engines.byxatab,
     engines.atopgames,
     engines.releasebb, 
@@ -188,7 +191,6 @@ except Exception as e:
 # TODO https://www.cg-gamespc.com/games?game=QUERY
 # TODO https://worldofpcgames.com/?s=QUERY
 # TODO https://getfreegames.net/?s=QUERY
-# TODO https://triahgames.com/?s=QUERY
 # TODO https://reloadedsteam.com/?s=QUERY THIS ONE NEXT
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://www.old-games.ru/ maybe?
