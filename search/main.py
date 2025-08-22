@@ -4,6 +4,7 @@ import struct
 import ctypes
 import traceback
 from threading import Thread
+import engines.romheaven_csf
 import engines.triahgames
 from helpers import read_message, send_message, safe_generator
 
@@ -30,6 +31,7 @@ import engines.steam
 import engines.gog
 import engines.triahgames
 import engines.reloadedsteam
+import engines.romheaven_csf
 
 # once silksong releases, ill download it with this tool, lock myself up for a week and just play silksong
 
@@ -59,13 +61,14 @@ all_engines = [
     engines.unioncrax,
     engines.steamgg,
     engines.steamunderground, 
+    engines.reloadedsteam,
     engines.triahgames, 
     engines.byxatab,
     engines.atopgames,
     engines.releasebb, 
     engines.elamigos,
     engines.myabandonware,
-    engines.reloadedsteam
+    engines.romheaven_csf
 ]
 
 if sys.argv[1] == "Debug":
@@ -191,7 +194,6 @@ except Exception as e:
     sys.stderr.buffer.write(message)
     sys.stderr.buffer.flush()
 
-# TODO https://romheaven.com/csf maybe - add "uncracked" to names, otherwise people may end up confused
 # TODO https://gamepcfull.com/?s=QUERY
 # TODO https://www.cg-gamespc.com/games?game=QUERY
 # TODO https://worldofpcgames.com/?s=QUERY
