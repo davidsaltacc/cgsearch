@@ -26,6 +26,7 @@ import engines.myabandonware
 import engines.steamgg
 import engines.atopgames
 import engines.steam
+import engines.gog
 
 if __name__ != "__main__":
     exit(0)
@@ -40,6 +41,7 @@ else:
 # - maybe. idk. sometimes the order just feels random as fuck
 all_engines = [
     engines.steam,
+    engines.gog,
     engines.fitgirl, 
     engines.steamrip,
     engines.gamebounty, 
