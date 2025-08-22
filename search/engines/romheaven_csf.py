@@ -19,7 +19,7 @@ def get_links_romheaven_csf(name):
             yield {
                 "RepackTitle": game["app_name"] + " (Build " + game["build"] + ") (Uncracked - CSF)",
                 "LinkName": "Pixeldrain" if type == "pixeldrain" else ("Buzzheavier" if type == "buzzheavier" else "Direct Download"),
-                "LinkUrl": "https://pixeldrain.com/u/" + game["pixeldrain"] if type == "pixeldrain" else ("https://buzzheavier.com/f/" + game["buzzheavier"] if type == "buzzheavier" else urllib.parse.quote(f"https://dl.romheaven.com/{game['appid']}.rar?filename=({game['appid']}) {game['install_dir']}.rar")),
+                "LinkUrl": "https://pixeldrain.com/u/" + game["pixeldrain"] if type == "pixeldrain" else ("https://buzzheavier.com/f/" + game["buzzheavier"] if type == "buzzheavier" else "https://dl.romheaven.com/{game['appid']}.rar?filename=" + urllib.parse.quote(f"{game['appid']}) {game['install_dir']}.rar")),
                 "LinkType": "Direct",
                 "RepackPage": "https://romheaven.com/csf",
                 "Score": score
