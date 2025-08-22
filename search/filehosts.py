@@ -52,6 +52,9 @@ class AllFilehosts(Enum): # 1. is for showing warnings on bad filehosts, and 2. 
     BuzzHeavier = Filehost("BuzzHeavier", "buzzheavier", "buzz", "buzzheavr")
     BowFile = Filehost("BowFile", "bowfile", bad = IsBad.Slightly, warning = "Warning: A BowFile link was detected. Please note that on their free plan download speeds are limited to about 1mb/s.")
     AkiraBox = Filehost("AkiraBox", "akira")
+    Terabox = Filehost("TeraBox", "terabox", bad = IsBad.Slightly, warning = "Warning: A TeraBox link was detected. To download a file from terabox, you need an account, so you might want to choose a different link.")
+    GoogleDrive = Filehost("Google Drive", "googledrive", "google")
+    DooDrive = Filehost("DooDrive", "doodrive", bad = IsBad.Slightly, warning = "Warning: A DooDrive link was detected. To download a file from DooDrive, you need to go through an annoying process of clicking through ads, you might want to choose a different link.")
 
 def get_filehost(linkName, linkType, linkData):
     # two passes, so links belonging to a specific filehost, but hosted on filecrypt or similar, won't get falsely marked as "Multiple Filehosts" 
