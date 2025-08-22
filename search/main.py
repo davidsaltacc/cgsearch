@@ -3,10 +3,10 @@ import sys
 import struct
 import ctypes
 import traceback
-from threading import Thread, Event
+from threading import Thread
 from helpers import read_message, send_message, safe_generator
 
-import stats.link_warnings
+import filehosts
 
 import engines.steamrip 
 import engines.fitgirl 
@@ -75,14 +75,16 @@ if sys.argv[1] == "Debug":
     
     exit(0)
 
-boost_official_links = True # TODO make configurable
+boost_official_links = True 
+lower_bad_filehosts = True # TODO make configurable
 
 excluded_engines = []
 
 search_thread = None
 
-try:
+import sys, gc
 
+try:
     while True:
         msg = read_message()
         if msg[0] is None:
@@ -109,16 +111,32 @@ try:
                     
                     for result in safe_generator(engine.generator(query), on_error):
 
-                        if (len(result["LinkUrl"].strip()) == 0):
-                            continue
+                        try: # this is the only section that isn't inside a try block otherwise, so we put it manually 
+                        
+                            if (len(result["LinkUrl"].strip()) == 0):
+                                continue
+                                
+                            if (result["LinkType"] == "Official") and boost_official_links:
+                                result["Score"] *= 1.2
                             
-                        if (result["LinkType"] == "Official") and boost_official_links:
-                            result["Score"] *= 1.2
+                            filehost = filehosts.get_filehost(result["LinkName"], result["LinkType"], result["LinkUrl"])
 
-                        send_message(b"link", json.dumps({ 
-                            "engine_id": engine.engine_meta["id"],
-                            "result": result
-                        }).encode())
+                            result["Filehost"] = filehost.name
+                            # so for some reason, because there was an error being thrown trying to get the filehost, mentioning filehost in any way besides defining it causes my memory usage to spike about 1gb.
+
+                            if lower_bad_filehosts:
+                                if filehost.bad == filehosts.IsBad.Yes:
+                                    result["Score"] *= 0.6
+                                if filehost.bad == filehosts.IsBad.Slightly:
+                                    result["Score"] *= 0.9
+
+                            send_message(b"link", json.dumps({ 
+                                "engine_id": engine.engine_meta["id"],
+                                "result": result
+                            }).encode())
+                        
+                        except Exception as e:
+                            on_error(e)
                 
                 send_message(b"done", b"")
             
@@ -145,7 +163,8 @@ try:
             data = {
                 "query": msg_data.decode()
             }
-            result = stats.link_warnings.information_filehost(json.loads(msg_data.decode()))
+            query = json.loads(msg_data.decode())
+            result = filehosts.warning_filehost(query[0], query[1], query[2])
             if result:
                 data["message"] = result
             send_message(b"lnfo", json.dumps(data).encode())

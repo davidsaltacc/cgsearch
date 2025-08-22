@@ -85,12 +85,12 @@ namespace CGSearchUI
             PyStdin.Write(data, 0, data.Length);
             PyStdin.Flush();
         }
-
+        
         public static void SendMessage(string type, string data)
         {
             SendMessage(Encoding.UTF8.GetBytes(type), Encoding.UTF8.GetBytes(data));
         }
-
+        
         public static Tuple<byte[]?, byte[]?> ReadMessage()
         {
             if (PyStdout == null)
@@ -127,11 +127,6 @@ Add-Type -AssemblyName PresentationFramework;
             string output = proc.StandardOutput.ReadToEnd();
             string error = proc.StandardError.ReadToEnd();
             proc.WaitForExit();
-
-            Debug.WriteLine("=== STDOUT ===");
-            Debug.WriteLine(output);
-            Debug.WriteLine("=== STDERR ===");
-            Debug.WriteLine(error);
         }
 
     }

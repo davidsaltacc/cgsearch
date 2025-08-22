@@ -5,7 +5,6 @@ using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using Avalonia.VisualTree;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -88,6 +87,7 @@ namespace CGSearchUI
                                         repackData.GetValue("LinkUrl").ToString(),
                                         repackData.GetValue("LinkType").ToString(),
                                         repackData.GetValue("RepackPage").ToString(),
+                                        repackData.GetValue("Filehost").ToString(),
                                         float.Parse(repackData.GetValue("Score").ToString())
                                     ));
                                 });
@@ -149,6 +149,7 @@ namespace CGSearchUI
 
                             List<string> queryList = new();
                             queryList.Add(fullResult.LinkName);
+                            queryList.Add(fullResult.LinkType);
                             queryList.Add(fullResult.LinkUrl);
                             string query = JsonConvert.SerializeObject(queryList);
 

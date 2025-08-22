@@ -1,6 +1,6 @@
 ﻿namespace CGSearchUI
 {
-    public class EngineResultLink(string repackTitle, string provider, string linkName, string linkUrl, string linkType, string repackPage, float score)
+    public class EngineResultLink(string repackTitle, string provider, string linkName, string linkUrl, string linkType, string repackPage, string filehost, float score)
     {
 
         public string RepackTitle { get; set; } = repackTitle;
@@ -9,6 +9,7 @@
         public string LinkUrl { get; set; } = linkUrl;
         public string LinkType { get; set; } = linkType;
         public string RepackPage { get; set; } = repackPage;
+        public string Filehost { get; set; } = filehost;
         public float Score { get; set; } = float.Round(score, 3);
     }
 }

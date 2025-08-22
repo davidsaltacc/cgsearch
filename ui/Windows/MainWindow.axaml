@@ -82,7 +82,8 @@
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
-					<DataGridTextColumn Header="Result Confidence" Binding="{Binding Score}"/>
+					<DataGridTextColumn Header="Filehost" Binding="{Binding Filehost}"/>
+					<DataGridTextColumn Header="Score" Binding="{Binding Score}"/>
 				</DataGrid.Columns>
 
 			</DataGrid>
