@@ -9,7 +9,7 @@ Firstly, your engine must export two fields - `generator` and `engine_meta`. `en
 | `id`          | The ID of the search engine, usually all lowercase without any special characters. Is only used internally in several places. |
 | `name`        | The friendly name of the engine that users will see. |
 | `homepage`    | A link to the repackers/uploaders/distributor's homepage. Will be opened on request of the user. |
-| `description` | A short description about the repackers/uploaders/distributor. |
+| `description` | A short description about the repacker/uploader/distributor. |
 
 `generator` is a function, more specifically a generator, that yields results based on an input. The function should accept exactly one parameter, that usually being `name` - you can also call it `query` or whatever you like to call it. The generator returns nothing, but yields several results, one for each download link - these results are simple dictionaries with multiple fields. How it gets these results is up to the engine itself. 
 
