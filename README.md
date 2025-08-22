@@ -20,7 +20,7 @@ To make your own engine, simply look at how one of the existing one works. The m
 
 If you want to run some python scripts directly, without using the installed CGSearch, what you can do is run `post_build.ps1 onlyRuntime` in the cloned repository, which will install a small python runtime with all the dependencies, and to test you simply need to run `runtime/python.exe YOUR_FILE.py`. Alternatively, if you do have CGSearch installed and you want a python instance, you can also use the python runtime bundled with it, like `(installation directory)\bin\runtime\python.exe YOUR_FILE.py`.
 
-For Debugging your engine - you will have to add it to the list of all engines in main.py, and to be able to debug easily without launching the whole application, you can launch `path\to\python.exe main.py Debug` - because when launching it with the `Debug` flag, it will just ask you for a search query, and the engine to give the search query to. You don't need to enter the full engine ID - a part of it works too, as long as its unique from others. This will just use that specific engine to look for the query and print out the results.
+For Debugging your engine - you will have to add it to the list of all engines in main.py, and to be able to debug easily without launching the whole application, you can launch `path\to\python.exe main.py Debug` - because when launching it with the `Debug` flag, it will just ask you for a search query, and the engine to give the search query to. This will just use that specific engine to look for the query and print out the results.
 
 ## Further Contributions
 

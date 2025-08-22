@@ -25,6 +25,7 @@ import engines.fluxyrepacks
 import engines.myabandonware
 import engines.steamgg
 import engines.atopgames
+import engines.steam
 
 if __name__ != "__main__":
     exit(0)
@@ -38,6 +39,7 @@ else:
 # adjusting this order will also change the order they show up in the ui (as the secondary sort criteria after what is selected)
 # - maybe. idk. sometimes the order just feels random as fuck
 all_engines = [
+    engines.steam,
     engines.fitgirl, 
     engines.steamrip,
     engines.gamebounty, 
@@ -65,7 +67,7 @@ if sys.argv[1] == "Debug":
     engine = input("Engine? ")
 
     for eng_ in all_engines:
-        if engine in eng_.engine_meta["id"]:
+        if engine == eng_.engine_meta["id"]:
             pprint(list(eng_.generator(query)))
             exit(0)
     
@@ -158,7 +160,7 @@ except Exception as e:
 # TODO https://worldofpcgames.com/?s=QUERY
 # TODO https://getfreegames.net/?s=QUERY
 # TODO https://triahgames.com/?s=QUERY
-# TODO https://reloadedsteam.com/?s=QUERY
+# TODO https://reloadedsteam.com/?s=QUERY THIS ONE NEXT
 # TODO https://elenemigos.com/?g_name=QUERY&platform=PC&order=last_update
 # TODO https://www.old-games.ru/ maybe?
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
