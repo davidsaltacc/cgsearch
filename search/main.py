@@ -137,6 +137,9 @@ try:
             for eng in all_engines:
                 data[eng.engine_meta["id"]] = eng.engine_meta
             send_message(b"egns", json.dumps(data).encode())
+
+        if msg_type == b"bsof": # boost official links above others
+            boost_official_links = msg_data.decode() == "true"
         
         if msg_type == b"lnfo": # get potential warnings about link
             data = {

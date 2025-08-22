@@ -29,6 +29,18 @@ public partial class SettingsWindow : Window
             SharedStuff.askPopupWarnings = value;
         }
     }
+    public bool BoostOfficialLinks
+    {
+        get
+        {
+            return SharedStuff.boostOfficialLinks;
+        }
+        set
+        {
+            IPCHelper.SendMessage("bsof", value ? "true" : "false");
+            SharedStuff.boostOfficialLinks = value;
+        }
+    }
 
     public SettingsWindow()
     {
