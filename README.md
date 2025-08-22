@@ -22,6 +22,8 @@ If you want to run some python scripts directly, without using the installed CGS
 
 For Debugging your engine - you will have to add it to the list of all engines in main.py, and to be able to debug easily without launching the whole application, you can launch `path\to\python.exe main.py Debug` - because when launching it with the `Debug` flag, it will just ask you for a search query, and the engine to give the search query to. This will just use that specific engine to look for the query and print out the results.
 
+For more information on how to make your own engine, check out the [docs](/docs/1_search_engines.md).
+
 ## Further Contributions
 
 If you want to make modifications to the UI or other parts that don't only touch the search engines, you will have to clone the repository as described in the previous step. A few things are required for that: 1. A Visual Studio 2022 installation with Avalonia support, NSIS installed and in PATH, Optionally ImageMagick and in PATH (only used for creating a better quality .ico file, but is not needed), and have a Folder Publishing Profile set up - standard release builds are not enough if you want an installer and a distributable version to be generated.
