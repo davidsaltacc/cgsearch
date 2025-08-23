@@ -36,6 +36,7 @@ import engines.elenemigos
 import engines.old_games
 import engines.gamepcfull
 import engines.cg_gamespc
+import engines.worldofpcgames
 
 # once silksong releases, ill download it with this tool, lock myself up for a week and just play silksong
 
@@ -72,6 +73,7 @@ all_engines = [
     engines.elenemigos,
     engines.cg_gamespc,
     engines.gamepcfull,
+    engines.worldofpcgames,
     engines.releasebb, 
     engines.elamigos,
     engines.myabandonware,
@@ -202,6 +204,5 @@ except Exception as e:
     sys.stderr.buffer.write(message)
     sys.stderr.buffer.flush()
 
-# TODO https://worldofpcgames.com/?s=QUERY
 # TODO https://getfreegames.net/?s=QUERY
 # TODO https://oldgamesdownload.com/?s=QUERY maybe? maybe
