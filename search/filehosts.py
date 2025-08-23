@@ -27,7 +27,7 @@ class AllFilehosts(Enum): # 1. is for showing warnings on bad filehosts, and 2. 
     # feel free to expand the list.
     # note that all spaces are stripped from links before searching, so a tag with a space in it will never be found.
     # the links and names also get lowercased before.
-    Unknown = Filehost("Unknown", bad = IsBad.Slightly) 
+    Unknown = Filehost("Unknown") 
     Torrent = Filehost("Torrent", "torrent")
     Official = Filehost("Official", "official")
     Multiple = Filehost("Multiple Filehosts", "filecrypt", "multiup", "multiple", "bin.0xfc", second_pass = True)
