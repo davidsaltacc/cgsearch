@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +41,12 @@ namespace CGSearchUI
                 MessageBox("Failed to launch search engine backend. Please re-install CGSearch to try and fix this issue.\n\nError: " + ex, "Error starting python", "Error");
                 Environment.Exit(-1);
                 return null;
+            }
+
+            IntPtr job = CreateJobObject(IntPtr.Zero, null);
+            if (job != IntPtr.Zero)
+            {
+                AssignProcessToJobObject(job, process.Handle);
             }
 
             Task errorTask = new(() =>
@@ -128,6 +133,12 @@ Add-Type -AssemblyName PresentationFramework;
             string error = proc.StandardError.ReadToEnd();
             proc.WaitForExit();
         }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        static extern IntPtr CreateJobObject(IntPtr lpJobAttributes, string? lpName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool AssignProcessToJobObject(IntPtr hJob, IntPtr hProcess);
 
     }
 }
