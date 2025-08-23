@@ -58,6 +58,13 @@ if (!(Test-Path "runtime/runtime_valid")) {
     Invoke-Expression "runtime/Scripts/pip.exe install -r search/requirements.txt --target runtime/Lib/site-packages" 2> $null
     # don't mind the stderr suppression, it makes my vs builds fail even with successful installation due to obscure reasons
 
+    # remove pip 
+    Remove-Item -Recurse -Force -Path "runtime/Lib/site-packages/pip"
+    Remove-Item -Force -Path "runtime/Scripts/pip.exe"
+    Remove-Item -Force -Path "runtime/Scripts/pip3.exe"
+    Remove-Item -Force -Path "runtime/Scripts/pip3.13.exe"
+    Get-ChildItem -Path "runtime/Lib/site-packages/" -Directory | Where-Object { $_.Name -match '^pip-(\d+(?:\.\d+)*)\.dist-info$' } | Select-Object -First 1 | Remove-Item -Recurse -Force
+
     # a file so we can cache the runtime, so we don't have to re-download it each build
     New-Item -Path "runtime/runtime_valid" -ItemType File
 

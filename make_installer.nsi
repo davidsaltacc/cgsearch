@@ -50,6 +50,8 @@ SetCompressor /SOLID lzma
 Section "CGSearch"
 SectionIn RO
 
+RMDir /r $INSTDIR
+
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayName" "${APP_NAME}"
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "DisplayVersion" "${version}"
 WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" "Publisher" "justacoder"
