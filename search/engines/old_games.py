@@ -10,7 +10,7 @@ def get_links_old_games(name):
     soup = BeautifulSoup(data, "html.parser")
     
     name_link = [
-        (a.get_text(strip = True), a["href"])
+        (a.get_text(strip = False), a["href"]) 
         for a in soup.select("main#main .main-content .listtable tr td table tr td[align=\"left\"] a")
     ]
     
