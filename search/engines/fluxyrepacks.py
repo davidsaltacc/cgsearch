@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from helpers import absolutify_url, filter_matches
 import requests
 
-def get_links_gload(name):
+def get_links_fluxyrepacks(name):
     
     data = requests.get("https://fluxyrepacks.xyz/games").text
     
@@ -41,7 +41,7 @@ def get_links_gload(name):
                 "Score": score
             }
 
-generator = get_links_gload
+generator = get_links_fluxyrepacks
 engine_meta = {
     "id": "fluxyrepacks",
     "name": "Fluxy Repacks",
